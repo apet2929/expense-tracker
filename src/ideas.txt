@@ -1,0 +1,52 @@
+
+Transaction: (data structure)
+    - Cash amount
+    - Date
+    - Category
+    - Description (optional)
+
+User:
+    - Data stored in local storage
+    - Has graph of cash over time
+    - Has a table of transactions
+        - Has buttons to edit/delete transactions 
+
+    - Vars:
+        - History
+            - Dictionary of (date, list of transaction)
+        - List of stock holdings? (Implement after everything else)
+            - Can check the price graph of all your stocks easily
+                - Either with Yahoo Finance api
+                - or by creating a Yahoo Finance iFrame with the stock's graph
+    - Functions:
+        - getCurrentCash()
+            - Sums up all the transactions in history
+        - getCashAtDate(date)
+            - Sums all transactions until date
+        -addTransaction(transaction) or addTransaction(cash, date, category, description?)
+            - Adds a transaction to the current date's list of transactions
+        - editTransaction(transactionOld, transactionNew)
+            - Removes transactionOld, replaced it with transactionNew
+        - deleteTransaction(transaction)
+            - Deletes transaction
+        - Site has a graph of cash over time
+            - Click on data points to get the list of transactions that occured on that day
+            - Use chart.js
+
+
+Issues:
+    - I want it to sync across my devices
+        - SQL instead of localStorage?
+            - Hard to make secure
+            - Any libraries to make authentication easier?
+                - Google Auth
+        * Cloud Firestore (Google)
+            - Easy to Implement
+            - Seamless authentication
+
+Resources:
+Firestore docs -> https://firebase.google.com/docs/firestore 
+Chart.js docs -> https://www.chartjs.org/
+React refresher -> https://reactjs.org/tutorial/tutorial.html
+
+
