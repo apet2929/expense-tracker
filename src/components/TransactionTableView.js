@@ -1,6 +1,6 @@
 import React from "react"
 
-class TransactionView extends React.Component {
+class TransactionTableView extends React.Component {
     constructor(props){
         super(props);
     }
@@ -29,4 +29,4 @@ class TransactionView extends React.Component {
 }
 
 
-export default TransactionView;
+export default TransactionTableView;

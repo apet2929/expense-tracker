@@ -3,7 +3,7 @@ import "firebase/firestore";
 import { saveUser, loadUser } from "../Firestore";
 import { getAuth } from "firebase/auth";
 import LoginControl from "./LoginControl";
-import TransactionView from "./TransactionView";
+import TransactionTableView from "./TransactionTableView";
 import Transaction from "./Transaction";
 import TransactionForm from "./TransactionForm";
 
@@ -40,6 +40,20 @@ class User extends React.Component {
         });
     }
 
+    getCash(dateFilter=null) {
+        let skipDateCheck = false;
+        if(dateFilter == null) skipDateCheck = true;
+        var cash = 0;
+        this.state.transaction_history.forEach((transaction) => {
+            if(skipDateCheck || transaction.date <= dateFilter) {
+                cash += transaction.amount;
+            } else {
+                console.log(`Date check failed! Date filter: (${dateFilter}) Transaction date: (${transaction.date})`);
+            }
+        });
+        return cash;
+    }
+
     loadTransactions(json_list_string) {
         let raw_json = JSON.parse(json_list_string);
         var history = [];
@@ -64,6 +78,7 @@ class User extends React.Component {
     }
 
     renderLoggedIn() {
+        let dateFilter = new Date(2022, 0, 10)
         return (
             <div>
                 <h2>{this.state.user_id}</h2>
@@ -71,7 +86,8 @@ class User extends React.Component {
                 <button onClick={() => this.addTransaction("Yee")}>Add data</button>
                 <button onClick={() => saveUser(this.state)}>Save user</button>
                 <TransactionForm addTransaction={this.addTransaction}/>
-                <TransactionView transactions={this.state.transaction_history}/>
+                <TransactionTableView transactions={this.state.transaction_history}/>
+                <h3>Total cash: ${this.getCash(dateFilter)}</h3>
             </div>
         )
     }
