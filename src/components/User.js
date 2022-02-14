@@ -3,14 +3,20 @@ import "firebase/firestore";
 import { saveUser, loadUser } from "../Firestore";
 import { getAuth } from "firebase/auth";
 import LoginControl from "./LoginControl";
+import TransactionView from "./TransactionView";
+import Transaction from "./Transaction";
 
 class User extends React.Component {
     constructor() {
         super();
+        let default_transactions = [
+            new Transaction(new Date(), 1500, "Poo", "I shidd"),
+            new Transaction(new Date(), 2400, "Food", "Sophia and I went out to eat")
+        ]
         this.state = {
             user_id: "",
             email: "",
-            data: []
+            transaction_history: default_transactions
         };
 
         getAuth().onAuthStateChanged((user) => {
@@ -21,8 +27,8 @@ class User extends React.Component {
                     data = result;
                     this.setState({
                         user_id: user.uid,
-                        email: user.email,
-                        data: data.data
+                        email: user.email
+                        // transaction_history: data.transaction_history ? data.transaction_history : []
                     })
                 });
             }
@@ -32,16 +38,9 @@ class User extends React.Component {
         this.isSignedIn = this.isSignedIn.bind(this);
     }
 
-    setUserId(id) {
-        this.setState({
-            user_id: id,
-            data: this.state.data
-        });
-    }
-
     addData(data) {
-        console.log(this.state.data);
-        var newData = this.state.data;
+        console.log(this.state.transaction_history);
+        var newData = this.state.transaction_history;
 
         newData.push(data);
         this.setState({
@@ -57,7 +56,7 @@ class User extends React.Component {
         }
     }
 
-    isSignedIn(){
+    isSignedIn() {
         return this.state.user_id != "";
     }
 
@@ -66,9 +65,9 @@ class User extends React.Component {
             <div>
                 <h2>{this.state.user_id}</h2>
                 <h2>{this.state.email}</h2>
-                <h2>{this.state.data}</h2>
                 <button onClick={() => this.addData("Yee")}>Add data</button>
                 <button onClick={() => saveUser(this.state)}>Save user</button>
+                <TransactionView transactions={this.state.transaction_history}/>
             </div>
         )
     }

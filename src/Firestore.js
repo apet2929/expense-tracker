@@ -51,7 +51,7 @@ export function addUser(userData) {
       addDoc(collection(db, "users", userData.user_id), {
         user_id: userData.user_id,
         email: userData.email,
-        data: userData.data
+        transaction_history: userData.transaction_history
       }); 
     }
     }, error => console.error(error));
@@ -63,7 +63,7 @@ export function saveUser(userData) {
   setDoc(doc(db, "users", userData.user_id), {
     user_id: userData.user_id,
     email: userData.email,
-    data: userData.data
+    transaction_history: userData.transaction_history
   }); 
 }
 
