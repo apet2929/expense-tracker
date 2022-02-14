@@ -3,7 +3,7 @@
 import { initializeApp } from "firebase/app";
 
 import { getAnalytics } from "firebase/analytics";
-import { collection, getDocs, getFirestore, addDoc } from "firebase/firestore";
+import { doc, collection, getDocs, getDoc, getFirestore, addDoc, setDoc } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -48,13 +48,37 @@ export function addUser(userData) {
       // User does not exist in database
       console.log("Adding new user!");
       const db = getFirestore(app);
-      const userRef = addDoc(collection(db, "users"), {
+      addDoc(collection(db, "users", userData.user_id), {
         user_id: userData.user_id,
-        email: userData.email
+        email: userData.email,
+        data: userData.data
       }); 
     }
     }, error => console.error(error));
 
+}
+
+export function saveUser(userData) {
+  const db = getFirestore(app);
+  setDoc(doc(db, "users", userData.user_id), {
+    user_id: userData.user_id,
+    email: userData.email,
+    data: userData.data
+  }); 
+}
+
+export async function loadUser(user_id){
+  const db = getFirestore(app);
+  const docRef = doc(db, "users", user_id);
+  const docSnapshot = await getDoc(docRef);
+  
+  if(docSnapshot.exists()) {
+    let data = docSnapshot.data();
+    console.dir(data);
+    return data;
+  } else {
+    console.error(`User with id ${user_id} does not exist in the database!`);
+  }
 }
   
 async function doesUserExist(email) {
