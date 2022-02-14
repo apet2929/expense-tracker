@@ -5,6 +5,7 @@ import { getAuth } from "firebase/auth";
 import LoginControl from "./LoginControl";
 import TransactionView from "./TransactionView";
 import Transaction from "./Transaction";
+import TransactionForm from "./TransactionForm";
 
 class User extends React.Component {
     constructor() {
@@ -19,41 +20,43 @@ class User extends React.Component {
             transaction_history: default_transactions
         };
 
+        this.addTransaction = this.addTransaction.bind(this);
+        this.isSignedIn = this.isSignedIn.bind(this);
         getAuth().onAuthStateChanged((user) => {
             if (user) {
                 console.log("User signed in");
                 var data;
                 loadUser(user.uid).then((result) => {
                     data = result;
+                    let th = this.loadTransactions(data.transaction_history);
+                    console.dir(th);
                     this.setState({
                         user_id: user.uid,
-                        email: user.email
-                        // transaction_history: data.transaction_history ? data.transaction_history : []
+                        email: user.email,
+                        transaction_history: th 
                     })
                 });
             }
         });
-
-        this.addData = this.addData.bind(this);
-        this.isSignedIn = this.isSignedIn.bind(this);
     }
 
-    addData(data) {
+    loadTransactions(json_list_string) {
+        let raw_json = JSON.parse(json_list_string);
+        var history = [];
+        for (const obj of raw_json) {
+            history.push(new Transaction(new Date(obj.date), obj.amount, obj.category, obj.description));
+        }
+        return history;
+    }
+
+    addTransaction(date, amount, category, description) {
         console.log(this.state.transaction_history);
         var newData = this.state.transaction_history;
-
-        newData.push(data);
+        const newTransaction = new Transaction(new Date(date), amount, category, description);
+        newData.push(newTransaction);
         this.setState({
-            data: newData
+            transaction_history: newData
         });
-    }
-
-    updateInput = e => {
-        if(e.target.name === "user_id") {
-            this.setUserId(e.target.value);
-        } else if(e.target.name === "data") {
-            this.addData(e.target.value)
-        }
     }
 
     isSignedIn() {
@@ -65,8 +68,9 @@ class User extends React.Component {
             <div>
                 <h2>{this.state.user_id}</h2>
                 <h2>{this.state.email}</h2>
-                <button onClick={() => this.addData("Yee")}>Add data</button>
+                <button onClick={() => this.addTransaction("Yee")}>Add data</button>
                 <button onClick={() => saveUser(this.state)}>Save user</button>
+                <TransactionForm addTransaction={this.addTransaction}/>
                 <TransactionView transactions={this.state.transaction_history}/>
             </div>
         )

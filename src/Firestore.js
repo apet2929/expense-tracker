@@ -63,7 +63,7 @@ export function saveUser(userData) {
   setDoc(doc(db, "users", userData.user_id), {
     user_id: userData.user_id,
     email: userData.email,
-    transaction_history: userData.transaction_history
+    transaction_history: JSON.stringify(userData.transaction_history)
   }); 
 }
 
