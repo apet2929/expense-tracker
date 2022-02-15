@@ -4,37 +4,43 @@ import { saveUser, loadUser } from "../Firestore";
 import { getAuth } from "firebase/auth";
 import LoginControl from "./LoginControl";
 import TransactionTableView from "./TransactionTableView";
-import Transaction from "./Transaction";
+import Transaction, { TransactionCategory } from "./Transaction";
 import TransactionForm from "./TransactionForm";
+import TransactionGraphView from "./TransactionGraphView";
+
 
 class User extends React.Component {
     constructor() {
         super();
-        let default_transactions = [
-            new Transaction(new Date(), 1500, "Poo", "I shidd"),
-            new Transaction(new Date(), 2400, "Food", "Sophia and I went out to eat")
-        ]
+
         this.state = {
             user_id: "",
             email: "",
-            transaction_history: default_transactions
+            transaction_history: []
         };
+    }
 
+    componentDidMount() {
         this.addTransaction = this.addTransaction.bind(this);
         this.isSignedIn = this.isSignedIn.bind(this);
+
+        let history = [
+            new Transaction(new Date(), -15, TransactionCategory.Transportation, "Bought gas")
+        ];
         getAuth().onAuthStateChanged((user) => {
             if (user) {
                 console.log("User signed in");
                 var data;
                 loadUser(user.uid).then((result) => {
                     data = result;
-                    let th = this.loadTransactions(data.transaction_history);
-                    console.dir(th);
+                    // let th = this.loadTransactions(data.transaction_history);
+                    // console.dir(th);
                     this.setState({
                         user_id: user.uid,
                         email: user.email,
-                        transaction_history: th 
-                    })
+                        // transaction_history: th 
+                        transaction_history: history
+                    });
                 });
             }
         });
@@ -78,7 +84,6 @@ class User extends React.Component {
     }
 
     renderLoggedIn() {
-        let dateFilter = new Date(2022, 0, 10)
         return (
             <div>
                 <h2>{this.state.user_id}</h2>
@@ -87,7 +92,8 @@ class User extends React.Component {
                 <button onClick={() => saveUser(this.state)}>Save user</button>
                 <TransactionForm addTransaction={this.addTransaction}/>
                 <TransactionTableView transactions={this.state.transaction_history}/>
-                <h3>Total cash: ${this.getCash(dateFilter)}</h3>
+                <h3>Total cash: ${this.getCash()}</h3>
+                <TransactionGraphView transactions={this.state.transaction_history}/>
             </div>
         )
     }

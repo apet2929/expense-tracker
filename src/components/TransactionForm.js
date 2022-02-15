@@ -2,6 +2,8 @@ import React from "react";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import "../App.css";
+import { TransactionCategory } from "./Transaction";
+import TransactionCategoryPicker from "./TransactionCategoryPicker";
 
 class TransactionForm extends React.Component {
     constructor(props) {
@@ -54,16 +56,10 @@ class TransactionForm extends React.Component {
     }
     
     validateDate(value) {
-        console.log(`Form date value: ${value}`);
-        let d = Date.parse(value);
-        if(isNaN(d)){
-            return false;
-        } else {
-            this.setState({
-                date: d,
-                validDate: true
-            });
-        }
+        this.setState({
+            date: value,
+            validDate: true
+        });
     }
 
     validateAmount(value) {
@@ -82,9 +78,10 @@ class TransactionForm extends React.Component {
 
     validateCategory(value) {
         // TODO : Implement Category Enum
+        let category = TransactionCategory.FromName(value);
         this.setState({
             validCategory: true,
-            category: value
+            category: category
         });
     }
 
@@ -109,7 +106,7 @@ class TransactionForm extends React.Component {
                 <label htmlFor="date">Date:</label>
                 <DatePicker 
                     selected={this.state.date}
-                    onChange={(date) => this.setState({date: date})}
+                    onChange={(date) => this.validateDate(date)}
                     className="form-control input-sm"
                 />
                 <label htmlFor="amount">Amount ($):</label>
@@ -119,14 +116,7 @@ class TransactionForm extends React.Component {
                     onChange={(e) => this.handleChange(e)}
                     value={this.state.amount}
                 />
-                <label htmlFor="category">Category:</label>
-                <input 
-                    type="text"
-                    name="category"
-                    placeholder="Test"
-                    onChange={(e) => this.handleChange(e)}
-                    value={this.state.category}
-                />
+                <TransactionCategoryPicker handleChange={this.handleChange}/>
                 <label htmlFor="description">Description (optional):</label>
                 <input 
                     type="text"
