@@ -10,7 +10,6 @@ class TransactionGraphView extends React.Component {
         // let data = this.getData(this.props.transactions);
         // let labels = this.getLabels(this.props.transactions);
 
-
         this.data = {
             datasets: [{
                 label: 'Total Cash',
@@ -19,7 +18,7 @@ class TransactionGraphView extends React.Component {
                 backgroundColor: 'rgba(75,192,192,1)',
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 2,
-                data: [{x:'2016-12-25', y:20}, {x:'2016-12-26', y:10}]
+                data: this.getData(props.transactions)
               }]
         };
 

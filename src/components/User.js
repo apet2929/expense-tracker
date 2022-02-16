@@ -12,7 +12,6 @@ import TransactionGraphView from "./TransactionGraphView";
 class User extends React.Component {
     constructor() {
         super();
-
         this.state = {
             user_id: "",
             email: "",
@@ -24,22 +23,19 @@ class User extends React.Component {
         this.addTransaction = this.addTransaction.bind(this);
         this.isSignedIn = this.isSignedIn.bind(this);
 
-        let history = [
-            new Transaction(new Date(), -15, TransactionCategory.Transportation, "Bought gas")
-        ];
         getAuth().onAuthStateChanged((user) => {
             if (user) {
                 console.log("User signed in");
                 var data;
                 loadUser(user.uid).then((result) => {
                     data = result;
-                    // let th = this.loadTransactions(data.transaction_history);
+                    let th = this.loadTransactions(data.transaction_history);
                     // console.dir(th);
                     this.setState({
                         user_id: user.uid,
                         email: user.email,
-                        // transaction_history: th 
-                        transaction_history: history
+                        transaction_history: th 
+                        // transaction_history: history
                     });
                 });
             }
@@ -70,13 +66,13 @@ class User extends React.Component {
     }
 
     addTransaction(date, amount, category, description) {
-        console.log(this.state.transaction_history);
         var newData = this.state.transaction_history;
         const newTransaction = new Transaction(new Date(date), amount, category, description);
         newData.push(newTransaction);
         this.setState({
             transaction_history: newData
         });
+        saveUser(this.state);
     }
 
     isSignedIn() {
@@ -88,7 +84,6 @@ class User extends React.Component {
             <div>
                 <h2>{this.state.user_id}</h2>
                 <h2>{this.state.email}</h2>
-                <button onClick={() => this.addTransaction("Yee")}>Add data</button>
                 <button onClick={() => saveUser(this.state)}>Save user</button>
                 <TransactionForm addTransaction={this.addTransaction}/>
                 <TransactionTableView transactions={this.state.transaction_history}/>
