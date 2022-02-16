@@ -7,3 +7,7 @@ form > * {
   margin-right: 0.5%;
 }
 
+#transaction-chart {
+  width: 50%;
+  height: 50%;
+}

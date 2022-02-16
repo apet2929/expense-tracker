@@ -36,6 +36,7 @@ class User extends React.Component {
                         transaction_history: th 
                         // transaction_history: history
                     });
+                    this.sortTransactions();
                 });
             }
         });
@@ -71,7 +72,18 @@ class User extends React.Component {
         this.setState({
             transaction_history: newData
         });
+        this.sortTransactions();
         saveUser(this.state);
+    }
+
+    sortTransactions(){
+        let transactions = this.state.transaction_history;
+        transactions.sort((a, b) => {
+            return new Date(a.date) - new Date(b.date);
+        });
+        this.setState({
+            transaction_history: transactions
+        });
     }
 
     isSignedIn() {
@@ -88,7 +100,7 @@ class User extends React.Component {
                 <TransactionForm addTransaction={this.addTransaction}/>
                 <TransactionTableView transactions={this.state.transaction_history}/>
                 <h3>Total cash: ${this.getCash()}</h3>
-                <TransactionChart />
+                <TransactionChart transactions={this.state.transaction_history}/>
             </div>
         )
     }

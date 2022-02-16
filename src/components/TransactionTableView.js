@@ -6,6 +6,7 @@ class TransactionTableView extends React.Component {
     }
 
     render() {
+        console.log("Table renderring");
         return (
                 <table id="transaction-chart">
                     <thead>
