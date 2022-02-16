@@ -65,6 +65,14 @@ export function saveUser(userData) {
     email: userData.email,
     transaction_history: JSON.stringify(userData.transaction_history)
   }); 
+
+  let elem = document.getElementById("saveStatus");
+  elem.innerText = "Saved!";
+  elem.hidden = false;
+  setTimeout(() => {
+    elem.hidden = true;
+    
+  }, 5000);
 }
 
 export async function loadUser(user_id){

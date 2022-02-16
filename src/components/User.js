@@ -6,7 +6,7 @@ import LoginControl from "./LoginControl";
 import TransactionTableView from "./TransactionTableView";
 import Transaction, { TransactionCategory } from "./Transaction";
 import TransactionForm from "./TransactionForm";
-import TransactionGraphView from "./TransactionGraphView";
+import TransactionChart from "./TransactionChart";
 
 
 class User extends React.Component {
@@ -26,10 +26,9 @@ class User extends React.Component {
         getAuth().onAuthStateChanged((user) => {
             if (user) {
                 console.log("User signed in");
-                var data;
                 loadUser(user.uid).then((result) => {
-                    data = result;
-                    let th = this.loadTransactions(data.transaction_history);
+                    console.dir(result);
+                    let th = this.loadTransactions(result.transaction_history);
                     // console.dir(th);
                     this.setState({
                         user_id: user.uid,
@@ -80,6 +79,7 @@ class User extends React.Component {
     }
 
     renderLoggedIn() {
+
         return (
             <div>
                 <h2>{this.state.user_id}</h2>
@@ -88,7 +88,7 @@ class User extends React.Component {
                 <TransactionForm addTransaction={this.addTransaction}/>
                 <TransactionTableView transactions={this.state.transaction_history}/>
                 <h3>Total cash: ${this.getCash()}</h3>
-                <TransactionGraphView transactions={this.state.transaction_history}/>
+                <TransactionChart />
             </div>
         )
     }
