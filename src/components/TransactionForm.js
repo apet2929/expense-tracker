@@ -22,18 +22,53 @@ class TransactionForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label htmlFor="date">Date:</label>
+                <DatePicker 
+                    selected={this.state.date}
+                    onChange={(date) => this.validateDate(date)}
+                    className="form-control input-sm"
+                />
+                <label htmlFor="amount">Amount ($):</label>
+                <input 
+                    type="text"
+                    name="amount"
+                    onChange={(e) => this.handleChange(e)}
+                    value={this.state.amount}
+                />
+                <TransactionCategoryPicker handleChange={this.handleChange}/>
+                <label htmlFor="description">Description (optional):</label>
+                <input 
+                    type="text"
+                    name="descripton"
+                    placeholder=""
+                    onChange={(e) => this.handleChange(e)}
+                    value={this.state.description}
+                />
+                <button type="submit">Submit</button>
+            </form>
+        )
+    }
+
+    reset(){
+        this.setState({
+            date: new Date(),
+            amount: 0,
+            category: "",
+            description: "",
+            validDate: true,
+            validAmount: false,
+            validCategory: true,
+        });
+    }
+
     handleChange(event) {
         this.validateField(event.target.name, event.target.value);
     }
 
-    shouldSubmit() {
-        return (this.state.validAmount && this.state.validCategory && this.state.validDate);
-    }
-
     validateField(name, value) {
-        let validAmount = this.state.validAmount;
-        let validDate = this.state.validDate;
-        let validCategory = this.state.validCategory;
         console.log(`Validating form field ${name} with value ${value}`);
         switch(name) {
             case "amount": {
@@ -64,10 +99,10 @@ class TransactionForm extends React.Component {
 
     validateAmount(value) {
         let amt = Number.parseFloat(value);
-        if(value == ""){
+        if(value === "" || value === "-"){
             this.setState({
                 validAmount: false,
-                amount: ""
+                amount: value
             });
         }
         else if(isNaN(amt)) {
@@ -92,6 +127,7 @@ class TransactionForm extends React.Component {
     }
 
     handleSubmit(event) {
+        // Clear form data on submit
         event.preventDefault();
         console.log("Form submitted!");
         console.dir(this.state);
@@ -101,40 +137,17 @@ class TransactionForm extends React.Component {
             console.log("Adding transaction!");
             console.dir(this.state);
             this.props.addTransaction(this.state.date, this.state.amount, this.state.category, this.state.description);
+            this.reset();
         } else {
             alert("Some required value(s) were not filled out!");
         }
     }
 
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <label htmlFor="date">Date:</label>
-                <DatePicker 
-                    selected={this.state.date}
-                    onChange={(date) => this.validateDate(date)}
-                    className="form-control input-sm"
-                />
-                <label htmlFor="amount">Amount ($):</label>
-                <input 
-                    type="text"
-                    name="amount"
-                    onChange={(e) => this.handleChange(e)}
-                    value={this.state.amount}
-                />
-                <TransactionCategoryPicker handleChange={this.handleChange}/>
-                <label htmlFor="description">Description (optional):</label>
-                <input 
-                    type="text"
-                    name="descripton"
-                    placeholder=""
-                    onChange={(e) => this.handleChange(e)}
-                    value={this.state.description}
-                />
-                <button type="submit">Submit</button>
-            </form>
-        )
+    shouldSubmit() {
+        return (this.state.validAmount && this.state.validCategory && this.state.validDate);
     }
+
+    
 }
 
 export default TransactionForm;

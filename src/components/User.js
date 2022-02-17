@@ -8,6 +8,7 @@ import Transaction, { TransactionCategory } from "./Transaction";
 import TransactionForm from "./TransactionForm";
 import TransactionChart from "./TransactionChart";
 import { nanoid } from "nanoid";
+import TransactionPieChart from "./TransactionPieChart";
 
 
 const FILTER_MAP = {
@@ -16,7 +17,9 @@ const FILTER_MAP = {
     Transportation: (transaction) => transaction.category.name === TransactionCategory.Transportation.name,
     Entertainment: (transaction) => transaction.category.name === TransactionCategory.Entertainment.name,
     Investment: (transaction) => transaction.category.name === TransactionCategory.Investment.name,
+    Work: (transaction) => transaction.category.name === TransactionCategory.Work.name,
     Misc: (transaction) => transaction.category.name === TransactionCategory.Misc.name,
+
     PastThirtyDays: (transaction) => {
         let lastThirty = new Date();
         lastThirty.setDate(lastThirty.getDate() - 30);
@@ -34,7 +37,7 @@ class User extends React.Component {
             user_id: "",
             email: "",
             transaction_history: [],
-            filter: "Food"
+            filter: "All"
         };
     }
 
@@ -59,16 +62,11 @@ class User extends React.Component {
         });
     }
 
-    getCash(dateFilter=null) {
-        let skipDateCheck = false;
-        if(dateFilter == null) skipDateCheck = true;
-        var cash = 0;
-        this.state.transaction_history.forEach((transaction) => {
-            if(skipDateCheck || transaction.date <= dateFilter) {
-                cash += transaction.amount;
-            } else {
-                console.log(`Date check failed! Date filter: (${dateFilter}) Transaction date: (${transaction.date})`);
-            }
+    getCash() {
+        let cash = 0;
+        let transactions = this.getFilteredTransactions();
+        transactions.forEach((transaction) => {
+            cash += transaction.amount;
         });
         return cash;
     }
@@ -113,10 +111,24 @@ class User extends React.Component {
         });
     }
 
-    renderLoggedIn() {
-        let transactions = this.state.transaction_history.filter(FILTER_MAP[this.state.filter]);
-        console.dir(transactions);
+    getFilteredTransactions(){
+        return this.state.transaction_history.filter(FILTER_MAP[this.state.filter]);
+    }
 
+    getPieChartData() {
+        let data = {}
+        TransactionCategory.getCategories().forEach((category) => {
+            data[category] = 0
+        });
+
+        this.state.transaction_history.forEach((transaction) => {
+            if(transaction.category) data[transaction.category.name] += transaction.amount
+        });
+        return data;
+    }
+
+    renderLoggedIn() {
+        let transactions = this.getFilteredTransactions();
         let filter_buttons = FILTER_NAMES.map((filter) => {
             return (
                 <button
@@ -132,6 +144,7 @@ class User extends React.Component {
             <div>
                 <h2>{this.state.user_id}</h2>
                 <h2>{this.state.email}</h2>
+                <h2>Filter: {this.state.filter}</h2>
                 <button onClick={() => saveUser(this.state)}>Save user</button>
                 <div id="filter-buttons">
                     {
@@ -142,6 +155,7 @@ class User extends React.Component {
                 <TransactionTableView transactions={transactions}/>
                 <h3>Total cash: ${this.getCash()}</h3>
                 <TransactionChart transactions={transactions}/>
+                <TransactionPieChart data={this.getPieChartData()} />
             </div>
         )
     }

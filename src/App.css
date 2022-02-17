@@ -7,7 +7,12 @@ form > * {
   margin-right: 0.5%;
 }
 
-#transaction-chart {
+#transaction-line-chart {
+  width: 50%;
+  height: 50%;
+}
+
+#transaction-pie-chart {
   width: 50%;
   height: 50%;
 }

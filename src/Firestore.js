@@ -82,7 +82,6 @@ export async function loadUser(user_id){
   
   if(docSnapshot.exists()) {
     let data = docSnapshot.data();
-    console.dir(data);
     return data;
   } else {
     console.error(`User with id ${user_id} does not exist in the database!`);
