@@ -7,15 +7,34 @@ import TransactionTableView from "./TransactionTableView";
 import Transaction, { TransactionCategory } from "./Transaction";
 import TransactionForm from "./TransactionForm";
 import TransactionChart from "./TransactionChart";
+import { nanoid } from "nanoid";
 
+
+const FILTER_MAP = {
+    All: () => true,
+    Food: (transaction) => transaction.category.name === TransactionCategory.Food.name,
+    Transportation: (transaction) => transaction.category.name === TransactionCategory.Transportation.name,
+    Entertainment: (transaction) => transaction.category.name === TransactionCategory.Entertainment.name,
+    Investment: (transaction) => transaction.category.name === TransactionCategory.Investment.name,
+    Misc: (transaction) => transaction.category.name === TransactionCategory.Misc.name,
+    PastThirtyDays: (transaction) => {
+        let lastThirty = new Date();
+        lastThirty.setDate(lastThirty.getDate() - 30);
+        return transaction.date > lastThirty;
+    }
+  };
+
+const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 class User extends React.Component {
+
     constructor() {
         super();
         this.state = {
             user_id: "",
             email: "",
-            transaction_history: []
+            transaction_history: [],
+            filter: "Food"
         };
     }
 
@@ -27,9 +46,7 @@ class User extends React.Component {
             if (user) {
                 console.log("User signed in");
                 loadUser(user.uid).then((result) => {
-                    console.dir(result);
                     let th = this.loadTransactions(result.transaction_history);
-                    // console.dir(th);
                     this.setState({
                         user_id: user.uid,
                         email: user.email,
@@ -60,14 +77,14 @@ class User extends React.Component {
         let raw_json = JSON.parse(json_list_string);
         var history = [];
         for (const obj of raw_json) {
-            history.push(new Transaction(new Date(obj.date), obj.amount, obj.category, obj.description));
+            history.push(new Transaction(obj.id, new Date(obj.date), obj.amount, obj.category, obj.description));
         }
         return history;
     }
 
     addTransaction(date, amount, category, description) {
         var newData = this.state.transaction_history;
-        const newTransaction = new Transaction(new Date(date), amount, category, description);
+        const newTransaction = new Transaction("ts-"+nanoid(), new Date(date), amount, category, description);
         newData.push(newTransaction);
         this.setState({
             transaction_history: newData
@@ -90,17 +107,41 @@ class User extends React.Component {
         return this.state.user_id != "";
     }
 
+    setFilter(filter) {
+        this.setState({
+            filter: filter
+        });
+    }
+
     renderLoggedIn() {
+        let transactions = this.state.transaction_history.filter(FILTER_MAP[this.state.filter]);
+        console.dir(transactions);
+
+        let filter_buttons = FILTER_NAMES.map((filter) => {
+            return (
+                <button
+                id={"filter" + filter}
+                onClick={() => this.setFilter(filter)}
+                >
+                    {filter}
+                </button>
+            );
+        });
 
         return (
             <div>
                 <h2>{this.state.user_id}</h2>
                 <h2>{this.state.email}</h2>
                 <button onClick={() => saveUser(this.state)}>Save user</button>
+                <div id="filter-buttons">
+                    {
+                        filter_buttons
+                    }
+                </div>
                 <TransactionForm addTransaction={this.addTransaction}/>
-                <TransactionTableView transactions={this.state.transaction_history}/>
+                <TransactionTableView transactions={transactions}/>
                 <h3>Total cash: ${this.getCash()}</h3>
-                <TransactionChart transactions={this.state.transaction_history}/>
+                <TransactionChart transactions={transactions}/>
             </div>
         )
     }

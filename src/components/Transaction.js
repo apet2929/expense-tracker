@@ -32,7 +32,8 @@ export class TransactionCategory {
 
 class Transaction {
 
-    constructor(date, amount, category, description) {
+    constructor(id, date, amount, category, description) {
+        this.id = id;
         this.date = date;
         this.amount = amount;
         this.category = category;

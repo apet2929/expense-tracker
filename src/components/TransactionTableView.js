@@ -1,12 +1,16 @@
-import React from "react"
+import React, { useState } from "react"
+import { TransactionCategory } from "./Transaction";
 
 class TransactionTableView extends React.Component {
     constructor(props){
         super(props);
+        
+        this.state = {
+            filter: "Food"
+        };
     }
 
     render() {
-        console.log("Table renderring");
         return (
                 <table id="transaction-chart">
                     <thead>
