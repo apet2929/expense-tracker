@@ -6,7 +6,7 @@ import LoginControl from "./LoginControl";
 import TransactionTableView from "./TransactionTableView";
 import Transaction, { TransactionCategory } from "./Transaction";
 import TransactionForm from "./TransactionForm";
-import TransactionChart from "./TransactionChart";
+import TransactionLineChart from "./TransactionLineChart";
 import { nanoid } from "nanoid";
 import TransactionPieChart from "./TransactionPieChart";
 
@@ -44,6 +44,7 @@ class User extends React.Component {
     componentDidMount() {
         this.addTransaction = this.addTransaction.bind(this);
         this.isSignedIn = this.isSignedIn.bind(this);
+        this.deleteTransaction = this.deleteTransaction.bind(this);
 
         getAuth().onAuthStateChanged((user) => {
             if (user) {
@@ -88,6 +89,14 @@ class User extends React.Component {
             transaction_history: newData
         });
         this.sortTransactions();
+        saveUser(this.state);
+    }
+
+    deleteTransaction(id) {
+        const remainingTransactions = this.state.transaction_history.filter(t => t.id !== id)
+        this.setState({
+            transaction_history: remainingTransactions
+        });
         saveUser(this.state);
     }
 
@@ -152,9 +161,9 @@ class User extends React.Component {
                     }
                 </div>
                 <TransactionForm addTransaction={this.addTransaction}/>
-                <TransactionTableView transactions={transactions}/>
+                <TransactionTableView transactions={transactions} deleteTransaction={this.deleteTransaction}/>
                 <h3>Total cash: ${this.getCash()}</h3>
-                <TransactionChart transactions={transactions}/>
+                <TransactionLineChart transactions={transactions}/>
                 <TransactionPieChart data={this.getPieChartData()} />
             </div>
         )

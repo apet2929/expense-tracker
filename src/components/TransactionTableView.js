@@ -3,6 +3,21 @@ import { TransactionCategory } from "./Transaction";
 
 
 function TransactionTableView(props){
+
+    function renderTransaction(transaction) {
+        return (
+            <tr>
+                <td>{transaction.getDate()}</td>
+                <td>{transaction.amount.toString()}</td>
+                <td>{transaction.category.name}</td>
+                <td>{transaction.description}</td>
+                <td>
+                    <button className="transaction-delete-button" onClick={() => props.deleteTransaction(transaction.id)}>Delete</button>
+                </td>
+            </tr>
+        )
+    }
+
     return (
         <table id="transaction-chart">
             <thead>
@@ -15,7 +30,7 @@ function TransactionTableView(props){
             </thead>
             <tbody>
                 {
-                    props.transactions.map((transaction) => transaction.render())
+                    props.transactions.map((transaction) => renderTransaction(transaction))
                 }
                 
             </tbody>

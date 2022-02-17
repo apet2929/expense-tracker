@@ -53,6 +53,9 @@ class Transaction {
                 <td>{this.amount.toString()}</td>
                 <td>{this.category.name}</td>
                 <td>{this.description}</td>
+                <td>
+                    <button>Delete</button>
+                </td>
             </tr>
         )
     }

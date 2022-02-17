@@ -3,7 +3,7 @@ import { Chart } from "chart.js/auto"
 import { Line } from 'react-chartjs-2'
 
 
-class TransactionChart extends React.Component {
+class TransactionLineChart extends React.Component {
     getDefaultData(){
         return {
             label: "Total Cash",
@@ -60,4 +60,4 @@ class TransactionChart extends React.Component {
     }
 }
 
-export default TransactionChart;
+export default TransactionLineChart;
