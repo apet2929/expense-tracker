@@ -52,7 +52,14 @@ class TransactionLineChart extends React.Component {
         return (
             <div id="transaction-line-chart">
                 <Line 
-                options={{}}
+                options={
+                    {
+                    scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                    }
+                }}
                 data={this.getData()}    
                 />
             </div>

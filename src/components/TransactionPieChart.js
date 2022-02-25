@@ -41,7 +41,7 @@ function TransactionPieChart(props) {
     }
 
     return (
-        <div id="transaction-line-chart">
+        <div id="transaction-pie-chart">
             <Pie 
                 data={getChartData()}
                 options={options}

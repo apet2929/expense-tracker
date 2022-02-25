@@ -9,6 +9,7 @@ import TransactionForm from "./TransactionForm";
 import TransactionLineChart from "./TransactionLineChart";
 import { nanoid } from "nanoid";
 import TransactionPieChart from "./TransactionPieChart";
+import { googleSignout } from "../Auth";
 
 
 const FILTER_MAP = {
@@ -59,9 +60,20 @@ class User extends React.Component {
                     });
                     this.sortTransactions();
                 });
+            } else {
+                saveUser(this.state);
+                
+                this.setState({
+                    user_id: "",
+                    email: "",
+                    transaction_history: [],
+                    filter: "All"
+                });
             }
         });
     }
+
+    
 
     getCash() {
         let cash = 0;
@@ -111,7 +123,7 @@ class User extends React.Component {
     }
 
     isSignedIn() {
-        return this.state.user_id != "";
+        return this.state.user_id !== "";
     }
 
     setFilter(filter) {
@@ -136,9 +148,11 @@ class User extends React.Component {
         return data;
     }
 
-    renderLoggedIn() {
-        let transactions = this.getFilteredTransactions();
-        let filter_buttons = FILTER_NAMES.map((filter) => {
+    render() {
+        if(this.isSignedIn()) {
+
+            let transactions = this.getFilteredTransactions();
+            let filter_buttons = FILTER_NAMES.map((filter) => {
             return (
                 <button
                 id={"filter" + filter}
@@ -147,42 +161,35 @@ class User extends React.Component {
                     {filter}
                 </button>
             );
-        });
-
-        return (
-            <div>
-                <h2>{this.state.user_id}</h2>
-                <h2>{this.state.email}</h2>
-                <h2>Filter: {this.state.filter}</h2>
-                <button onClick={() => saveUser(this.state)}>Save user</button>
-                <div id="filter-buttons">
-                    {
-                        filter_buttons
-                    }
+            });
+            return (
+                <div>
+                    <div id="userHeader">
+                        <h2>{this.state.user_id}</h2>
+                        <h2>{this.state.email}</h2>
+                        <button className="signOutButton" onClick={googleSignout} style={{justifySelf: "end"}}>Sign Out</button>
+                    </div>
+                    <h2>Filter: {this.state.filter}</h2>
+                    <button onClick={() => saveUser(this.state)}>Save user</button>
+                    <div id="filter-buttons">
+                        {
+                            filter_buttons
+                        }
+                    </div>
+                    <h3>Total cash: ${this.getCash()}</h3>
+                    <TransactionForm addTransaction={this.addTransaction}/>
+                    <TransactionTableView transactions={transactions} deleteTransaction={this.deleteTransaction}/>
+                    
+                    <div className="charts">
+                        <TransactionLineChart transactions={transactions}/>
+                        <TransactionPieChart data={this.getPieChartData()} />
+                    </div>
                 </div>
-                <TransactionForm addTransaction={this.addTransaction}/>
-                <TransactionTableView transactions={transactions} deleteTransaction={this.deleteTransaction}/>
-                <h3>Total cash: ${this.getCash()}</h3>
-                <TransactionLineChart transactions={transactions}/>
-                <TransactionPieChart data={this.getPieChartData()} />
-            </div>
-        )
-    }
-
-    renderNotLoggedIn() {
-        return(
-            <div>
-                <LoginControl />
-                <p>You are not logged in!</p>
-            </div>
-        );
-    }
-
-    render() {
-        if(this.isSignedIn()) {
-            return this.renderLoggedIn();
+            )
         } else {
-            return this.renderNotLoggedIn();
+            return (
+                <div></div>
+            )
         }
     }
 }

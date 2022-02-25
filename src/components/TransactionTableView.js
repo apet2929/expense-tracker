@@ -19,7 +19,7 @@ function TransactionTableView(props){
     }
 
     return (
-        <table id="transaction-chart">
+        <table id="transaction-table">
             <thead>
                 <tr>
                     <th>Date</th>

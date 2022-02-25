@@ -24,12 +24,13 @@ class TransactionForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form id="transaction-form" onSubmit={this.handleSubmit}>
                 <label htmlFor="date">Date:</label>
                 <DatePicker 
                     selected={this.state.date}
                     onChange={(date) => this.validateDate(date)}
                     className="form-control input-sm"
+                    wrapperClassName="datepicker-wrapper"
                 />
                 <label htmlFor="amount">Amount ($):</label>
                 <input 

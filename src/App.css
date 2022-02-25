@@ -2,17 +2,56 @@
   text-align: center;
 }
 
-form > * {
-  margin-left: 0.5%;
-  margin-right: 0.5%;
+button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 6px;
+  
+}
+
+#userHeader {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-column-gap: 5%;
+  
+}
+
+#transaction-table {
+  overflow: scroll;
+  height: 30%;
+}
+
+#transaction-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.datepicker-wrapper {
+  /* !important overrides default datepicker style */
+  width:fit-content !important;
+}
+
+.charts {
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-evenly; 
 }
 
 #transaction-line-chart {
-  width: 50%;
+  width: 30%;
   height: 50%;
+  margin: auto;
 }
 
 #transaction-pie-chart {
-  width: 50%;
-  height: 50%;
+  width: 30%;
+  height: 30%;
+  margin: auto;
 }
