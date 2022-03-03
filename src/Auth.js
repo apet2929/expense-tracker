@@ -7,18 +7,22 @@ var provider = new GoogleAuthProvider();
 
 export function googleSignin() {
     
-    signInWithPopup(getAuth(), provider).then(function(result) {
+    signInWithPopup(getAuth(), provider).then((result) => {
+        console.log("Sign in result: ");
+        console.dir(result);
         var user = result.user;
+
         const userData = {
-            user_id: user.displayName,
+            user_id: user.uid,
             email: user.email
         };
+
         addUser(userData);
         return true;
 
-    }).catch(function(error) {
-        console.log(error.code)
-        console.log(error.message)
+    }).catch((error) => {
+        console.error("Sign in error!")
+        console.dir(error)
         return false;
     });
 }

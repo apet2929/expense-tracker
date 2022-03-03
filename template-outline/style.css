@@ -1,4 +1,12 @@
 :root {
+    --main-body: #59ff0038;
+    --main-body-shadow: #2B4D17;
+    --vibrant: #4FC70A;
+    --accent-light: #774196;
+    --accent-dark: #33084D;
+
+
+
     --brown: #B1A206;
     --dark-blue: #558A95;
     --light-blue: #7395AE;
@@ -8,21 +16,37 @@
 }
 
 body {
+    background-color: var(--main-body);
     margin: 0;
 }
 
 /* HEADER */
 
 header {
-    background-color: var(--light-blue);
-    height: 10vh;
+    height: auto;
+    border: 5px solid black;
+    padding: 10px;
 }
 
 .flex {
     display: flex;
-    justify-content: space-between;
-    /* align-content: center; */
-    
+    display: -webkit-flex;
+}
+
+.column {
+    padding: 5px;
+    margin: auto;
+}
+
+.column.middle {
+    flex: 3;
+}
+.column.side {
+    flex: 1;
+    width: 5vw;
+    height: 5vw;
+    /* background-color: var(--main-body-shadow); */
+
 }
 
 .centered > * {
@@ -39,28 +63,27 @@ header {
 }
 
 #title {
-    font-size: 3em;
+    font-size: 5vw;
     font-weight: 700;
     margin: auto;
+    text-align: center;
+    color: var(--main-body-shadow);
 }
 
 #logo {
     /* display: block; */
-    max-height: 80%;
-    width: auto;
-    height: auto;
+    height: 5vw;
+    width: 5vw;
     margin-top: auto;
     margin-bottom: auto;
 }
 
-#user-pfp-container {
-    max-height: 80%;
+#user-profile-container {
+    height: 80%;
     width: auto;
-    height: auto;
 
-    padding: 0px 10px 0px 10px;
-    margin-top: auto;
-    margin-bottom: auto;
+    padding: 10px;
+    margin: auto;
     margin-right: 1%;
     
     background-color: var(--dark-blue);
@@ -68,27 +91,37 @@ header {
     border-radius: 10px;
 }
 
-#user-pfp-container > img {
-    margin: auto;
+.profile {
+    width: 40%;
 }
 
-#username {
-    margin-left: 10px;
+.profile.profile-left {
+    float: left;
+}
+
+.profile.profile.profile-right {
+    float: right;
+}
+
+.profile-picture {
+    height: 100%;
+    width: auto;
 }
 
 
 /* MAIN CONTENT */
 
 #main-content-container {
-    background-color: var(--light-gray);
+    /* background-color: var(--light-gray); */
     height: 90vh;
+    padding: 10vw;
 }
 
 
 /* FOOTER */
 
 footer {
-    background-color: var(--dark-blue);
+    background-color: var(--main-body-shadow);
     height: 10vh;
 }
 

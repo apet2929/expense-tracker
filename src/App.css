@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #59ff0038;;
 }
 
 button {
@@ -11,7 +12,7 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: 46px;
   
 }
 
@@ -48,10 +49,12 @@ button {
   width: 30%;
   height: 50%;
   margin: auto;
+  background-color: #2B4D17;
 }
 
 #transaction-pie-chart {
   width: 30%;
   height: 30%;
   margin: auto;
+  background-color: #2B4D17;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import "firebase/firestore";
-import { saveUser, loadUser } from "../Firestore";
+import { saveUser, loadUser, addUser } from "../Firestore";
 import { getAuth } from "firebase/auth";
 import LoginControl from "./LoginControl";
 import TransactionTableView from "./TransactionTableView";
@@ -48,21 +48,28 @@ class User extends React.Component {
         this.deleteTransaction = this.deleteTransaction.bind(this);
 
         getAuth().onAuthStateChanged((user) => {
+            console.log("Auth state changed!");
             if (user) {
                 console.log("User signed in");
+                
                 loadUser(user.uid).then((result) => {
-                    let th = this.loadTransactions(result.transaction_history);
+                    console.dir(result);
                     this.setState({
                         user_id: user.uid,
                         email: user.email,
-                        transaction_history: th 
-                        // transaction_history: history
+                        transaction_history: []
                     });
-                    this.sortTransactions();
+                    if(result){
+                        let th = this.loadTransactions(result.transaction_history);
+                        this.setState({
+                            transaction_history: th 
+                        });
+                        this.sortTransactions();
+                    } else {
+                        addUser(this.state);
+                    } 
                 });
             } else {
-                saveUser(this.state);
-                
                 this.setState({
                     user_id: "",
                     email: "",
@@ -71,9 +78,11 @@ class User extends React.Component {
                 });
             }
         });
-    }
-
+    } 
     
+    tryLoadUser(user) {
+
+    }
 
     getCash() {
         let cash = 0;

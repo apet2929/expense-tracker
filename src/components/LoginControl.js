@@ -12,9 +12,9 @@ class LoginControl extends React.Component {
 
     handleLoginClicked() {
         let success = googleSignin();
-        if(!success) {
-            console.error("Sign in error!");
-        }
+        // if(!success) {
+        //     console.error("Sign in error!");
+        // }
     }
 
     handleSignoutClicked() {

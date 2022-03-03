@@ -40,19 +40,19 @@ export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 export function addUser(userData) {
-  console.log(`Trying to add user! ${userData.email}`);
-  doesUserExist(userData.email).then((exists) => {
+  console.log(`Trying to add user! User:`);
+  console.dir(userData)
+
+  doesUserExist(userData.user_id).then((exists) => {
     if(exists){
       console.log(`User with email ${userData.email} already exists!`);
     } else {
-      // User does not exist in database
-      console.log("Adding new user!");
-      const db = getFirestore(app);
-      addDoc(collection(db, "users", userData.user_id), {
+      let initial_data = {
         user_id: userData.user_id,
         email: userData.email,
-        transaction_history: userData.transaction_history
-      }); 
+        transaction_history: []
+      };
+      saveUser(initial_data);
     }
     }, error => console.error(error));
 
@@ -87,15 +87,14 @@ export async function loadUser(user_id){
     console.error(`User with id ${user_id} does not exist in the database!`);
   }
 }
-  
-async function doesUserExist(email) {
+
+async function doesUserExist(user_id) {
   console.log("Checking if user exists!");
-  var exists = false;
   let users = await getUsers();
   for(const user of users){
     console.dir(user);
-    const equals = (user.email == email);
-    console.log(`${user.email} == ${email} -> ${equals}`);
+    const equals = (user.user_id == user_id);
+    console.log(`${user.user_id} == ${user_id} -> ${equals}`);
     if(equals) return true;
   }
   return false;
