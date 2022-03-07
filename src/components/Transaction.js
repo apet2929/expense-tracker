@@ -7,7 +7,7 @@ export class TransactionCategory {
     static Entertainment = new TransactionCategory("Entertainment");
     static Work = new TransactionCategory("Work");
     static Investment = new TransactionCategory("Investment");
-    static Misc = new TransactionCategory("Miscellaneous");
+    static Misc = new TransactionCategory("Misc");
 
     constructor(name){
         this.name = name;
@@ -36,14 +36,21 @@ class Transaction {
         this.id = id;
         this.date = date;
         this.amount = amount;
-        this.category = category;
         this.description = description;
+        this.category = category;
 
+        if(typeof category == "string")  {
+            this.category = TransactionCategory.FromName(category);
+        } 
     }
 
     getDate(){
         var iso = this.date.toISOString();
         return iso.substring(0, iso.indexOf('T'));
+    }
+
+    validate() {
+        return (this.id && this.date && this.amount && this.category);
     }
 
     render() {

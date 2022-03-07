@@ -43,6 +43,7 @@ function TransactionPieChart(props) {
     return (
         <div id="transaction-pie-chart">
             <Pie 
+                className="chart-body"
                 data={getChartData()}
                 options={options}
                 />

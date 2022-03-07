@@ -46,6 +46,7 @@ class User extends React.Component {
         this.addTransaction = this.addTransaction.bind(this);
         this.isSignedIn = this.isSignedIn.bind(this);
         this.deleteTransaction = this.deleteTransaction.bind(this);
+        this.addRandomTransaction = this.addRandomTransaction.bind(this);
 
         getAuth().onAuthStateChanged((user) => {
             console.log("Auth state changed!");
@@ -80,10 +81,6 @@ class User extends React.Component {
         });
     } 
     
-    tryLoadUser(user) {
-
-    }
-
     getCash() {
         let cash = 0;
         let transactions = this.getFilteredTransactions();
@@ -96,15 +93,47 @@ class User extends React.Component {
     loadTransactions(json_list_string) {
         let raw_json = JSON.parse(json_list_string);
         var history = [];
+        console.log("Parsing transactions!");
+        console.dir(raw_json);
         for (const obj of raw_json) {
-            history.push(new Transaction(obj.id, new Date(obj.date), obj.amount, obj.category, obj.description));
+            console.dir(obj);
+            let t = new Transaction(obj.id, new Date(obj.date), obj.amount, obj.category, obj.description);
+            if(t.validate()) {
+                history.push(t);
+            }
         }
         return history;
     }
 
+    addRandomTransaction() {
+        function getRandomDate(start, end){
+            return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+        }
+        let dateStart = new Date(2017, 0, 0);
+        let dateEnd = new Date(2023, 0, 0);
+        let date = getRandomDate(dateStart, dateEnd);
+
+        let categories = TransactionCategory.getCategories();
+        let category = categories[Math.floor(Math.random()*categories.length)];
+
+        let amount = Math.floor(Math.random() * 10000);
+        console.log(date, amount, category);
+
+        this.addTransaction(date, amount, category)
+        
+    }
+
     addTransaction(date, amount, category, description) {
+        if(!(date && amount && category)) {
+            console.error("Invalid transaction parameters entered!");
+            return;
+        }
         var newData = this.state.transaction_history;
-        const newTransaction = new Transaction("ts-"+nanoid(), new Date(date), amount, category, description);
+        let c = category;
+        if(typeof category == "string")  {
+            c = TransactionCategory.FromName(category);
+        } 
+        const newTransaction = new Transaction("ts-"+nanoid(), new Date(date), amount, c, description);
         newData.push(newTransaction);
         this.setState({
             transaction_history: newData
@@ -123,6 +152,13 @@ class User extends React.Component {
 
     sortTransactions(){
         let transactions = this.state.transaction_history;
+        transactions.filter((transaction) => {
+            let valid = (transaction.date && transaction.amount && transaction.category);
+            if(!valid){
+                console.error("Invalid transaction filtered!", transaction);
+            }
+            return valid;
+        })
         transactions.sort((a, b) => {
             return new Date(a.date) - new Date(b.date);
         });
@@ -187,6 +223,8 @@ class User extends React.Component {
                     </div>
                     <h3>Total cash: ${this.getCash()}</h3>
                     <TransactionForm addTransaction={this.addTransaction}/>
+                    <button onClick={this.addRandomTransaction}>Add Random Transaction</button>
+                    <br></br>
                     <TransactionTableView transactions={transactions} deleteTransaction={this.deleteTransaction}/>
                     
                     <div className="charts">

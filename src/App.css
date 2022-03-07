@@ -24,10 +24,16 @@ button {
 }
 
 #transaction-table {
-  overflow: scroll;
-  height: 30%;
+  display: inline-block; 
+  overflow: auto;
+  height: 30vw;
+  padding: 2.5vw;
+  margin: auto;
+  margin-top:  20px; 
+  border: 2px solid black;
 }
 
+th div { margin-top: -20px; position: absolute; }
 #transaction-form {
   display: flex;
   flex-direction: row;
@@ -45,16 +51,23 @@ button {
   justify-content: space-evenly; 
 }
 
-#transaction-line-chart {
-  width: 30%;
-  height: 50%;
+.chart-container {
+  padding: 5%;
+  height: 20vw;
+}
+.chart-body {
+  background-color: #59ff0038;
+}
+
+.chart {
   margin: auto;
   background-color: #2B4D17;
+  width: 30%;
+}
+#transaction-line-chart {
+  height: 100%;
 }
 
 #transaction-pie-chart {
-  width: 30%;
   height: 30%;
-  margin: auto;
-  background-color: #2B4D17;
 }

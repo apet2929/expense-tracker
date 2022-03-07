@@ -44,19 +44,39 @@ class TransactionLineChart extends React.Component {
         return data;
     
     }
-    
+
+    getTimeStep() {
+        let len = this.props.transactions.length;
+        if(len != 0){
+            let timeRange = this.props.transactions[len-1].date - this.props.transactions[0].date;
+            let timeStep = timeRange / len * 1.5;
+            console.log(timeStep)
+            // let timeRange = this.props.transactions[this.props.transactions.length - 1].date - this.props.transactions[0].date
+            // let timeStep = timeRange / this.props.transactions.length * 1.5;
+            return timeStep;
+        }
+        return 1;
+    }
 
     render() {
         // this.updateData();
-        console.log("Chart renderring");
+        console.log("Line Chart renderring");
+        let timeStep = this.getTimeStep()
+
         return (
-            <div id="transaction-line-chart">
+            <div class="chart-container" id="transaction-line-chart">
                 <Line 
+                className="chart-body"
                 options={
                     {
                     scales: {
                         y: {
                           beginAtZero: true
+                        },
+                        x: {
+                            ticks: {
+                                stepSize: timeStep
+                            }
                         }
                     }
                 }}
