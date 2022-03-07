@@ -10,6 +10,8 @@ import TransactionLineChart from "./TransactionLineChart";
 import { nanoid } from "nanoid";
 import TransactionPieChart from "./TransactionPieChart";
 import { googleSignout } from "../Auth";
+import EditTransactionModal from "./EditTransactionModal";
+import { toHaveAccessibleDescription } from "@testing-library/jest-dom/dist/matchers";
 
 
 const FILTER_MAP = {
@@ -38,7 +40,8 @@ class User extends React.Component {
             user_id: "",
             email: "",
             transaction_history: [],
-            filter: "All"
+            filter: "All",
+            testValue: "Test"
         };
     }
 
@@ -47,6 +50,7 @@ class User extends React.Component {
         this.isSignedIn = this.isSignedIn.bind(this);
         this.deleteTransaction = this.deleteTransaction.bind(this);
         this.addRandomTransaction = this.addRandomTransaction.bind(this);
+        this.handleModalSubmit = this.handleModalSubmit.bind(this);
 
         getAuth().onAuthStateChanged((user) => {
             console.log("Auth state changed!");
@@ -142,6 +146,12 @@ class User extends React.Component {
         saveUser(this.state);
     }
 
+    handleModalSubmit(event) {
+        this.setState({
+            testValue: event.target.value
+        });
+    }
+
     deleteTransaction(id) {
         const remainingTransactions = this.state.transaction_history.filter(t => t.id !== id)
         this.setState({
@@ -214,6 +224,12 @@ class User extends React.Component {
                         <h2>{this.state.email}</h2>
                         <button className="signOutButton" onClick={googleSignout} style={{justifySelf: "end"}}>Sign Out</button>
                     </div>
+                    <h3>{this.state.testValue}</h3>
+                    <EditTransactionModal 
+                        handleChange={this.handleModalSubmit}
+                        handleSubmit={this.handleModalSubmit}
+                        
+                    />
                     <h2>Filter: {this.state.filter}</h2>
                     <button onClick={() => saveUser(this.state)}>Save user</button>
                     <div id="filter-buttons">
