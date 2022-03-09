@@ -1,73 +1,250 @@
-.App {
-  text-align: center;
-  background-color: #59ff0038;;
+:root {
+  --col1: #ffffff;
+  --col2: #353535;
+  --col3: #3C6E71;
+  --col4: #284B63;
+  --col5: #D9D9D9;
 }
 
-button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
+
+body {
+  background-color: var(--col1);
+  margin: 0;
+  color: var(--col2);
+}
+
+header {
+  background-color: var(--col3);
+  padding: 0;
+  margin: 0;
+  color: var(--col5);
+}
+
+.title {
+  font-size: 3.5vw;
+  width: 100%;
   text-align: center;
+  color: var(--col5);
+}
+
+.profilePic {
+  width: 3vw;
+  float: center;
+  margin-top: 1vw;
+  margin-left: 8vw;
+}
+
+.logoImg {
+  width: 4vw;
+  padding-left: 20%;
+}
+
+.headerTbl {
+  width: 100%;
+}
+
+.headerTbl td {
+  width: 50%;
+}
+
+.headerTbl td:first-child {
+  width: 25%;
+}
+
+.headerTbl td:last-child {
+  width: 25%;
+}
+
+.headerTbl td p {
+  font-size: 1.8vw;
+  float: right;
+  margin-bottom: 10%;
+  margin-right: 15%;
+}
+
+.main {
+  height: 55vw;
+}
+
+.totalMoney {
+  text-align: center;
+  font-size: 3vw;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.totalUnderline {
+  width: 16vw;
+  margin-left: 42vw;
+  border-radius: 1vw;
+  border-width: 4px;
+  color: var(--col3);
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+
+.buttons {
+  margin: 2vw 34vw 0 34vw;
+}
+
+.buttons button {
+  width: 10vw;
+  border-width: 3px;
+  background-color: var(--col3);
+  border-color: var(--col3);
+  border-radius: .8vw;
+  color: var(--col5);
+  height: 3vw;
+}
+
+
+.middle {
+  margin-top: 3vw;
+  margin-bottom: 5vw;
+}
+
+.transactionsBox {
+  width: 60vw;
+  float: left;
+  height: 40vw;
+}
+
+.chartsBox {
+  width: 40vw;
+  float: right;
+  height: 40vw;
+}
+
+.transactions {
+  background-color: var(--col1);
+  margin: 2vw;
+  margin-top: 1.4vw;
+  height: 35.6vw;
+  overflow: scroll;
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--col3);
+}
+
+.pieChart {
+  background-color: var(--col3);
+  margin: 2vw;
+  margin-top: 0;
+  padding-top: 0;
+  height: 36vw;
+  box-shadow: 100 100 0 var(--col4);
+}
+
+.pieChart img {
+  width: 20vw;
+  margin: 6vw 8vw 0vw 8vw;
+}
+
+.chartsHeader {
+  width: 100%;
+}
+
+.chartsLabelContainer {
+  width: 50%;
+  float: left;
+}
+
+.chartsLabelContainer h1 {
+  font-size: 3.5vw;
+  text-align: center;
+  margin: 1.5vw 0 0 0;
+  padding: 2vw 0 0 0;
+  color: var(--col5);
+  /* width: 50%;
+  float: left; */
+}
+
+.buttonContainer {
+  float: right;
+  width: 50%;
+  padding: 2vw;
+}
+
+.buttonContainer button {
+  border-color: var(--col3);
+  border-radius: .3vw;
+  width: 8vw;
+  height: 2vw;
+
+}
+
+
+
+.transactionTable {
+  width: 55vw;
+  border-collapse: separate;
+}
+
+.transactionTable th {
+  font-size: 1.7vw;
+  text-align: center;
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--col3);
+}
+
+.transactionTable tr {
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--col3);
+}
+
+.transactionTable td {
+  font-size: 1.3vw;
+  padding: .7vw;
+}
+
+.transactionTable td:nth-child(even) {
+  background-color: #a5a5a5;
+}
+
+.transactionTable td:nth-child(odd) {
+  background-color: var(--col5);
+}
+
+.transactionTable button {
+  border-color: var(--col3);
+  border-radius: .2vw;
+  width: 4vw;
+  height: 1.5vw;
+  margin: 0;
+  padding: 0;
+  border-width: 1px;
+}
+
+.transactionTable tr:nth-child(4) {
+  width: 1vw;
+  padding: 0;
+  margin: 0;
+}
+
+
+footer {
+  color: var(--col5);
+  background-color: var(--col4);
+  height: 10vw;
+  text-align: center;
+  padding: 3vw;
+  font-size: 1.3vw;
+}
+
+footer ul {
+  list-style-type: none;
+}
+
+footer ul li {
+  margin: .5vw
+}
+
+footer ul a {
+  color: var(--col5);
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 46px;
-  
-}
-
-#userHeader {
-  display: grid;
-  grid-template-columns: 30% 30% 30%;
-  grid-column-gap: 5%;
-  
-}
-
-#transaction-table {
-  display: inline-block; 
-  overflow: auto;
-  height: 30vw;
-  padding: 2.5vw;
-  margin: auto;
-  margin-top:  20px; 
-  border: 2px solid black;
-}
-
-th div { margin-top: -20px; position: absolute; }
-#transaction-form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.datepicker-wrapper {
-  /* !important overrides default datepicker style */
-  width:fit-content !important;
-}
-
-.charts {
-  display: flex;
-  flex-direction: row; 
-  justify-content: space-evenly; 
-}
-
-.chart-container {
-  padding: 5%;
-  height: 20vw;
-}
-.chart-body {
-  background-color: #59ff0038;
-}
-
-.chart {
-  margin: auto;
-  background-color: #2B4D17;
-  width: 30%;
-}
-#transaction-line-chart {
-  height: 100%;
-}
-
-#transaction-pie-chart {
-  height: 30%;
 }

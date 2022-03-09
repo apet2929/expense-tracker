@@ -89,12 +89,9 @@ export async function loadUser(user_id){
 }
 
 async function doesUserExist(user_id) {
-  console.log("Checking if user exists!");
   let users = await getUsers();
   for(const user of users){
-    console.dir(user);
     const equals = (user.user_id == user_id);
-    console.log(`${user.user_id} == ${user_id} -> ${equals}`);
     if(equals) return true;
   }
   return false;

@@ -1,35 +1,13 @@
-import { googleSignin, googleSignout } from "../Auth";
-import React from "react";
+import { googleSignin, googleSignout } from "../Auth"
 
-class LoginControl extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleLoginClicked = this.handleLoginClicked.bind(this);
-        this.handleSignoutClicked = this.handleSignoutClicked.bind(this);
-
-    }
-
-    handleLoginClicked() {
-        let success = googleSignin();
-        // if(!success) {
-        //     console.error("Sign in error!");
-        // }
-    }
-
-    handleSignoutClicked() {
-        googleSignout();
-
-    }
-
-    render() {
-        return (
-            <div>
-                <button onClick={ this.handleLoginClicked }>Sign In</button>
-                <button onClick={ this.handleSignoutClicked }>Sign Out</button>
-            </div>
-        )
-    }
+export function SignInButton() {
+    return (
+        <button className="login signin" onClick={googleSignin}>Sign In</button>
+    )
 }
 
-export default LoginControl;
+export function SignOutButton() {
+    return (
+        <button className="login signout" onClick={ googleSignout }>Sign Out</button>
+    )
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import { loadUser } from "../Firestore";
 
 export class TransactionCategory {
 
@@ -30,8 +30,7 @@ export class TransactionCategory {
     }
 }
 
-class Transaction {
-
+export class Transaction {
     constructor(id, date, amount, category, description) {
         this.id = id;
         this.date = date;
@@ -53,19 +52,42 @@ class Transaction {
         return (this.id && this.date && this.amount && this.category);
     }
 
-    render() {
-        return (
-            <tr>
-                <td>{this.getDate()}</td>
-                <td>{this.amount.toString()}</td>
-                <td>{this.category.name}</td>
-                <td>{this.description}</td>
-                <td>
-                    <button>Delete</button>
-                </td>
-            </tr>
-        )
-    }
 }
 
-export default Transaction;
+export function loadUserTransactions(user_id) {
+    loadUser(user_id).then((user) => {
+        let raw_json = JSON.parse(user.transaction_history);
+        var history = [];
+        console.log("Parsing transactions!");
+        console.dir(raw_json);
+        for (const obj of raw_json) {
+            console.dir(obj);
+            let t = new Transaction(obj.id, new Date(obj.date), obj.amount, obj.category, obj.description);
+            if(t.validate()) {
+                history.push(t);
+            }
+        }
+        
+        return history;
+    }, (err) => {
+        console.error(`Failed to load user transactions! \nError: ${err}`)
+        return null;
+    })
+
+}
+
+export function addTransaction(user_id, transaction){
+
+}
+
+export function editTransaction(user_id, old_transaction, new_transaction){
+
+}
+
+export function sumTransactionsAmount(transactions) {
+    let cash = 0;
+    transactions.forEach((transaction) => {
+        cash += transaction.amount;
+    });
+    return cash;
+}
