@@ -1,11 +1,11 @@
 import './App.css';
 import { getAuth } from 'firebase/auth';
 import UserHeader from './components/UserHeader';
-import { SignInButton, SignOutButton } from './components/LoginControl';
+import { SignInButton, SignOutButton } from './Auth';
 import React from 'react';
 import { getTransactions, loadUserTransactions, sumTransactionsAmount } from './functions/transactions';
 import { loadUserData } from './Firestore';
-
+import Footer from './components/Footer';
 
 function getPhotoUrl(user){
   if (typeof user.photoUrl != 'undefined') {
@@ -98,14 +98,15 @@ class App extends React.Component {
           <div className="App">
             <UserHeader username={user.displayName}/>
             <div class="main">
-                <h1 className="totalMoney">Total Money: {totalMoney}</h1>
-                <hr className="totalUnderline"></hr>
-                <section className="buttons">
-                  <button>New Transaction</button>
-                  <SignOutButton />
-                  <button>View Data</button>
-                </section>
-              </div>
+              <h1 className="totalMoney">Total Money: {totalMoney}</h1>
+              <hr className="totalUnderline"></hr>
+              <section id="buttons">
+                <button>New Transaction</button>
+                <SignOutButton />
+                <button>View Data</button>
+              </section>
+            </div>
+            <Footer />
           </div>
         );
         

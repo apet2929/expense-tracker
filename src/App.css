@@ -86,11 +86,15 @@ header {
 }
 
 
-.buttons {
-  margin: 2vw 34vw 0 34vw;
+#buttons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50vw;
+  margin: auto;
+  margin-top: 10px;
 }
 
-.buttons button {
+#buttons button {
   width: 10vw;
   border-width: 3px;
   background-color: var(--col3);

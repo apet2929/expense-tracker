@@ -1,5 +1,5 @@
 import React from "react";
-import {SignInButton} from "./LoginControl"
+import {SignInButton} from "../Auth"
 
 export default function UserHeader(props) {
     let {username, pfp_url} = props;

@@ -37,3 +37,15 @@ export function googleSignout() {
        console.error(error);
     });
 }
+
+export function SignInButton() {
+    return (
+        <button className="login signin" onClick={googleSignin}>Sign In</button>
+    )
+}
+
+export function SignOutButton() {
+    return (
+        <button className="login signout" onClick={ googleSignout }>Sign Out</button>
+    )
+}
