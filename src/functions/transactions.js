@@ -1,5 +1,3 @@
-import { loadUser } from "../Firestore";
-
 export class TransactionCategory {
 
     static Food = new TransactionCategory("Food"); 
@@ -51,37 +49,6 @@ export class Transaction {
     validate() {
         return (this.id && this.date && this.amount && this.category);
     }
-
-}
-
-export function loadUserTransactions(user_id) {
-    loadUser(user_id).then((user) => {
-        let raw_json = JSON.parse(user.transaction_history);
-        var history = [];
-        console.log("Parsing transactions!");
-        console.dir(raw_json);
-        for (const obj of raw_json) {
-            console.dir(obj);
-            let t = new Transaction(obj.id, new Date(obj.date), obj.amount, obj.category, obj.description);
-            if(t.validate()) {
-                history.push(t);
-            }
-        }
-        
-        return history;
-    }, (err) => {
-        console.error(`Failed to load user transactions! \nError: ${err}`)
-        return null;
-    })
-
-}
-
-export function addTransaction(user_id, transaction){
-
-}
-
-export function editTransaction(user_id, old_transaction, new_transaction){
-
 }
 
 export function sumTransactionsAmount(transactions) {
@@ -90,4 +57,12 @@ export function sumTransactionsAmount(transactions) {
         cash += transaction.amount;
     });
     return cash;
+}
+
+export function loadUserTransactions(json) {
+    let transactions = []
+    for(const obj of JSON.parse(json)){
+        transactions.push(new Transaction(obj.id, obj.date, obj.amount, TransactionCategory.FromName(obj.category.name), obj.description));
+    }
+    return transactions;
 }

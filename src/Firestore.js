@@ -75,7 +75,7 @@ export function saveUser(userData) {
   }, 5000);
 }
 
-export async function loadUser(user_id){
+export async function loadUserData(user_id){
   const db = getFirestore(app);
   const docRef = doc(db, "users", user_id);
   const docSnapshot = await getDoc(docRef);
