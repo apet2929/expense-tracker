@@ -69,7 +69,6 @@ class App extends React.Component {
     let loadUserPromise = loadUserData(user.uid)
     loadUserPromise.then((userData) => {
       console.log("User Data loaded!");
-      console.dir(userData);
       let transactions = loadUserTransactions(userData.transaction_history)
       this.setState({
         transactionsLoading: false,
@@ -98,7 +97,7 @@ class App extends React.Component {
         return (
           <div className="App">
             <UserHeader username={user.displayName}/>
-            <div class="main">
+            <div className="main">
               <h1 className="totalMoney">Total Money: {totalMoney}</h1>
               <hr className="totalUnderline"></hr>
               <section id="buttons">

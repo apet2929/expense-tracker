@@ -6,17 +6,17 @@ export default function UserHeader(props) {
     if(username) {
         return (
             <header>
-                <table class="headerTbl">
+                <table className="headerTbl">
                     <tbody>
                         <tr>
                             <td>
-                                <img class="logoImg" src="assets/logo.png" alt="logo" />
+                                <img className="logoImg" src="assets/logo.png" alt="logo" />
                             </td>
                             <td>
-                                <h1 class="title">Expense Tracker</h1>
+                                <h1 className="title">Expense Tracker</h1>
                             </td>
                             <td>
-                                <img class="profilePic" src={pfp_url ? pfp_url : "../assets/btc-logo.png"} alt="pfp" />
+                                <img className="profilePic" src={pfp_url ? pfp_url : "../assets/btc-logo.png"} alt="pfp" />
                                 <p>{username}</p>
                             </td>
                         </tr>
@@ -28,13 +28,13 @@ export default function UserHeader(props) {
     // User is not signed in
     return (
         <header>
-            <table class="headerTbl">
+            <table className="headerTbl">
                 <tr>
                     <td>
-                        <img class="logoImg" src="assets/logo.png" alt="logo" />
+                        <img className="logoImg" src="assets/logo.png" alt="logo" />
                     </td>
                     <td>
-                        <h1 class="title">Expense Tracker</h1>
+                        <h1 className="title">Expense Tracker</h1>
                     </td>
                     <td>
                         <SignInButton />

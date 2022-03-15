@@ -1,7 +1,7 @@
 
 function toTableComponent(transaction){
     return (
-        <tr id={"table-"+transaction.id}>
+        <tr key={transaction.id} id={"table-"+transaction.id}>
             <td>{transaction.date}</td>
             <td>{transaction.amount}</td>
             <td>{transaction.category.name}</td>
@@ -15,9 +15,9 @@ export default function TransactionTableView(props){
     let transactions = props.transactions;
     let transactions_html = transactions.map(toTableComponent);
     return (
-        <div class="transactionsBox">
-            <div class="transactions">
-                <table class="transactionTable">
+        <div className="transactionsBox">
+            <div className="transactions">
+                <table className="transactionTable">
                     <thead>
                         <tr>
                             <th>Date</th>
