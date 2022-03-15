@@ -23,7 +23,7 @@ export default function TransactionTableView(props){
                             <th>Date</th>
                             <th>Amount</th>
                             <th>Category</th>
-                            <th colSpan="2">Description</th>
+                            <th>Description</th>
                             <th id="transaction_actions">Actions</th>
                         </tr>
                     </thead>
@@ -33,119 +33,119 @@ export default function TransactionTableView(props){
                             <td>2day</td>
                             <td>a lot</td>
                             <td>yum</td>
-                            <td colspan="2">was hungy. not anymor</td>
+                            <td>was hungy. not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>    
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         <tr>
                             <td>2/2/2222</td>
                             <td>$2222</td>
                             <td>Food</td>
-                            <td colspan="2">was hungy, not anymor</td>
+                            <td>was hungy, not anymor</td>
                             <td><button>Edit</button></td>
                         </tr>
                         
