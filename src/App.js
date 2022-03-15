@@ -6,6 +6,7 @@ import React from 'react';
 import { getTransactions, loadUserTransactions, sumTransactionsAmount } from './functions/transactions';
 import { loadUserData } from './Firestore';
 import Footer from './components/Footer';
+import TransactionTableView from './components/TransactionTableView';
 
 function getPhotoUrl(user){
   if (typeof user.photoUrl != 'undefined') {
@@ -104,6 +105,10 @@ class App extends React.Component {
                 <button>New Transaction</button>
                 <SignOutButton />
                 <button>View Data</button>
+              </section>
+
+              <section id="middle">
+                <TransactionTableView transactions={this.state.transaction_history} />
               </section>
             </div>
             <Footer />

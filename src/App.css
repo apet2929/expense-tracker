@@ -105,7 +105,7 @@ header {
 }
 
 
-.middle {
+#middle {
   margin-top: 3vw;
   margin-bottom: 5vw;
 }
@@ -127,10 +127,15 @@ header {
   margin: 2vw;
   margin-top: 1.4vw;
   height: 35.6vw;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   border-style: solid;
   border-width: 3px;
   border-color: var(--col3);
+}
+
+#transaction-actions {
+  background-color:var(--col3);
 }
 
 .pieChart {
@@ -183,7 +188,7 @@ header {
 
 
 .transactionTable {
-  width: 55vw;
+  width: 100%;
   border-collapse: separate;
 }
 
