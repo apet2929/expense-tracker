@@ -7,31 +7,7 @@ import { getTransactions, loadUserTransactions, sumTransactionsAmount } from './
 import { loadUserData } from './Firestore';
 import Footer from './components/Footer';
 import TransactionTableView from './components/TransactionTableView';
-
-function getPhotoUrl(user){
-  if (typeof user.photoUrl != 'undefined') {
-    return user.photoUrl;
-  } 
-  return null;
-}
-
-function printUser(event) {
-  console.dir(getAuth().currentUser);
-}
-
-function authUser() {
-  return new Promise(function (resolve, reject) {
-    getAuth().onAuthStateChanged(function(user) {
-      console.log("Auth state changed!");
-      if (user) {
-          resolve(user);
-      } else {
-          reject('User not logged in');
-      }             
-    });
-  });
-}
-
+import TransactionChartView from './components/TransactionChartView';
 
 class App extends React.Component {
   constructor(props) {
@@ -61,7 +37,6 @@ class App extends React.Component {
   }
 
   signIn(user){
-    console.log("User signed in!");
     this.setState({
       userAuthenticating: false,
       user: user,
@@ -108,6 +83,7 @@ class App extends React.Component {
 
               <section id="middle">
                 <TransactionTableView transactions={this.state.transaction_history} />
+                <TransactionChartView transactions={this.state.transaction_history}/>
               </section>
             </div>
             <Footer />

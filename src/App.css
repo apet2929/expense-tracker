@@ -108,6 +108,7 @@ header {
 #middle {
   margin-top: 3vw;
   margin-bottom: 5vw;
+  display: flex;
 }
 
 .transactionsBox {
@@ -138,7 +139,7 @@ header {
   background-color:var(--col3);
 }
 
-.pieChart {
+.chart {
   background-color: var(--col3);
   margin: 2vw;
   margin-top: 0;
@@ -147,7 +148,7 @@ header {
   box-shadow: 100 100 0 var(--col4);
 }
 
-.pieChart img {
+.chart img {
   width: 20vw;
   margin: 6vw 8vw 0vw 8vw;
 }
@@ -172,9 +173,12 @@ header {
 }
 
 .buttonContainer {
-  float: right;
+  /* float: right; */
   width: 50%;
-  padding: 2vw;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  /* padding: 2vw; */
 }
 
 .buttonContainer button {
