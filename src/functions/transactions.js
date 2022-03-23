@@ -31,7 +31,7 @@ export class TransactionCategory {
 export class Transaction {
     constructor(id, date, amount, category, description) {
         this.id = id;
-        this.date = date;
+        this.date = new Date(date);
         this.amount = amount;
         this.description = description;
         this.category = category;
@@ -48,6 +48,10 @@ export class Transaction {
 
     validate() {
         return (this.id && this.date && this.amount && this.category);
+    }
+
+    copy() {
+        return new Transaction(this.id, this.date, this.amount, this.category, this.description)
     }
 }
 

@@ -3,11 +3,12 @@ import { getAuth } from 'firebase/auth';
 import UserHeader from './components/UserHeader';
 import { SignInButton, SignOutButton } from './Auth';
 import React from 'react';
-import { getTransactions, loadUserTransactions, sumTransactionsAmount } from './functions/transactions';
+import { loadUserTransactions, sumTransactionsAmount } from './functions/transactions';
 import { loadUserData } from './Firestore';
 import Footer from './components/Footer';
 import TransactionTableView from './components/TransactionTableView';
 import TransactionChartView from './components/TransactionChartView';
+import EditTransactionModal from './components/EditTransactionModal';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,12 +17,19 @@ class App extends React.Component {
       userAuthenticating: true,
       user: getAuth().currentUser,
       transactionsLoading: true,
-      transaction_history: []
+      transaction_history: [],
+      editing: false,
+      editing_id: null
     };
   }
 
   componentDidMount(){
-    
+    this.deleteTransaction = this.deleteTransaction.bind(this);
+    this.endEditing = this.endEditing.bind(this);
+    this.setTransaction = this.setTransaction.bind(this);
+    this.requestEdit = this.requestEdit.bind(this);
+    this.saveEdit = this.saveEdit.bind(this);
+
     getAuth().onAuthStateChanged((user) => {
       console.log("Auth state changed!");
       if (user) {
@@ -61,7 +69,52 @@ class App extends React.Component {
     });
   }
 
+  getTransaction(transaction_id){
+    return this.state.transaction_history.find((transaction) => {
+      return transaction.id === transaction_id;
+    });
+  }
+
+  deleteTransaction(transaction_id){
+    console.log(transaction_id);
+    console.log(this.getTransaction(transaction_id));
+  }
+
+  setTransaction(transaction_id, new_transaction){
+    let old_transaction = this.getTransaction(transaction_id);
+    let index = this.state.transaction_history.indexOf(old_transaction);
+    let newHistory = this.state.transaction_history;
+    newHistory[index] = new_transaction
+    this.setState({
+      transaction_history: newHistory
+    });
+  }
+
+  requestEdit(transaction_id){
+    if(!this.state.editing){
+      this.setState({
+        editing: true,
+        editing_id: transaction_id
+      });
+    } else {
+      console.log(`Edit requested for ${transaction_id}, but the app is already editing ${this.state.editing_id}`);
+    }
+  }
+
+  endEditing(){
+    this.setState({
+      editing: false,
+      editing_id: null
+    });
+  }
+
+  saveEdit(new_transaction) {
+    this.setTransaction(this.state.editing_id, new_transaction);
+    this.endEditing();
+  }
+
   render(){
+    console.log("Top level rendering!");
     if(this.state.userAuthenticating){
       return null;
     } else {
@@ -82,8 +135,9 @@ class App extends React.Component {
               </section>
 
               <section id="middle">
-                <TransactionTableView transactions={this.state.transaction_history} />
+                <TransactionTableView transactions={this.state.transaction_history} editTransaction={this.requestEdit} deleteTransaction={this.deleteTransaction} />
                 <TransactionChartView transactions={this.state.transaction_history}/>
+                <EditTransactionModal transaction={this.getTransaction(this.state.editing_id)} isOpen={this.state.editing} close={this.endEditing} save={this.saveEdit}/>
               </section>
             </div>
             <Footer />

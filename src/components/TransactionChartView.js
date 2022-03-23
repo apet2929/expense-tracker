@@ -1,11 +1,12 @@
 import { useState } from "react"
+import TransactionPieChart from "./charts/TransactionPieChart";
 
 export default function TransactionChartView(props){
 
     let [chartType, setChartType] = useState(false);
 
     function isLineChart(chartType) {
-        if(chartType == true) return true;
+        if(chartType === true) return true;
         return false;
     }
 
@@ -13,13 +14,14 @@ export default function TransactionChartView(props){
         return (
             <div className="chart line">
                 <h3>Line Chart!</h3>
+                
             </div>
         )
     }
     function renderPieChart(transactions){
         return (
             <div className="chart pie">
-                <h3>Pie chart!</h3>
+                <TransactionPieChart transactions={props.transactions} />
             </div>
         )
     }

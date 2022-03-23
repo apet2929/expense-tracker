@@ -1,17 +1,20 @@
 
-function toTableComponent(transaction){
-    return (
-        <tr key={transaction.id} id={"table-"+transaction.id}>
-            <td>{transaction.date}</td>
-            <td>{transaction.amount}</td>
-            <td>{transaction.category.name}</td>
-            <td>{transaction.description}</td>
-            <td><button>Edit</button></td>
-        </tr>
-    )
-}
-
 export default function TransactionTableView(props){
+    let toTableComponent = (transaction) => {
+        return (
+            <tr key={transaction.id} id={"table-"+transaction.id}>
+                <td>{transaction.getDate()}</td>
+                <td>${transaction.amount}</td>
+                <td>{transaction.category.name}</td>
+                <td>{transaction.description}</td>
+    
+                <td>
+                    <button onClick={() => props.editTransaction(transaction.id)}>Edit</button>
+                    <button onClick={() => props.deleteTransaction(transaction.id)}>Delete</button>
+                </td>
+            </tr>
+        )
+    };
     let transactions = props.transactions;
     let transactions_html = transactions.map(toTableComponent);
     return (
@@ -29,126 +32,6 @@ export default function TransactionTableView(props){
                     </thead>
                     <tbody>
                         {transactions_html}
-                        <tr>
-                            <td>2day</td>
-                            <td>a lot</td>
-                            <td>yum</td>
-                            <td>was hungy. not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>    
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>2/2/2222</td>
-                            <td>$2222</td>
-                            <td>Food</td>
-                            <td>was hungy, not anymor</td>
-                            <td><button>Edit</button></td>
-                        </tr>
-                        
                     </tbody>
                 </table>
             </div>

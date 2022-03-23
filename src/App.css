@@ -121,6 +121,7 @@ header {
   width: 40vw;
   float: right;
   height: 40vw;
+  /* color: var(--col5); */
 }
 
 .transactions {
@@ -140,7 +141,7 @@ header {
 }
 
 .chart {
-  background-color: var(--col3);
+  background-color: var(--col5);
   margin: 2vw;
   margin-top: 0;
   padding-top: 0;
