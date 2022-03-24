@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+
 export class TransactionCategory {
 
     static Food = new TransactionCategory("Food"); 
@@ -30,7 +32,7 @@ export class TransactionCategory {
 
 export class Transaction {
     constructor(id, date, amount, category, description) {
-        this.id = id;
+        this.id = id ? id : "ts-" + nanoid();
         this.date = new Date(date);
         this.amount = amount;
         this.description = description;

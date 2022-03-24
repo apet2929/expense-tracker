@@ -8,7 +8,7 @@ import { loadUserData } from './Firestore';
 import Footer from './components/Footer';
 import TransactionTableView from './components/TransactionTableView';
 import TransactionChartView from './components/TransactionChartView';
-import EditTransactionModal from './components/EditTransactionModal';
+import EditTransactionModal from './components/modal/EditTransactionModal';
 
 class App extends React.Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class App extends React.Component {
   componentDidMount(){
     this.deleteTransaction = this.deleteTransaction.bind(this);
     this.endEditing = this.endEditing.bind(this);
+    this.createTransaction = this.createTransaction.bind(this);
     this.setTransaction = this.setTransaction.bind(this);
     this.requestEdit = this.requestEdit.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
@@ -80,7 +81,19 @@ class App extends React.Component {
     console.log(this.getTransaction(transaction_id));
   }
 
+  createTransaction(transaction){
+    let newHistory = this.state.transaction_history;
+    newHistory.push(transaction);
+    this.setState({
+      transaction_history: newHistory
+    });
+  }
+
   setTransaction(transaction_id, new_transaction){
+    if(transaction_id === null){
+      this.createTransaction(new_transaction);
+      return;
+    }
     let old_transaction = this.getTransaction(transaction_id);
     let index = this.state.transaction_history.indexOf(old_transaction);
     let newHistory = this.state.transaction_history;
@@ -109,6 +122,7 @@ class App extends React.Component {
   }
 
   saveEdit(new_transaction) {
+    console.log("Saving edit!", new_transaction);
     this.setTransaction(this.state.editing_id, new_transaction);
     this.endEditing();
   }

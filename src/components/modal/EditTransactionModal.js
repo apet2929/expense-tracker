@@ -1,11 +1,27 @@
+import { Transaction } from "../../functions/transactions";
 import React from "react"
 import Modal from "react-modal"
+import TransactionForm from "./TransactionForm";
 
-export default function EditTransactionModal(props) {
+function EditTransactionModal(props) {
     let editTransaction = () => {
         let temp = props.transaction.copy();
         temp.amount = 1000;
         props.save(temp);
+    }
+
+    let handleSubmit = (date, amount, category, description) => {
+        console.log("Handling submit!");
+        console.log(date, amount, category, description);
+        let transaction;
+        if(props.transaction){
+            transaction = new Transaction(props.transaction.id, date, amount, category, description);
+        } else {
+            transaction = new Transaction("", date, amount, category, description);
+        }
+        console.log("Submitted Transaction, saving now.",transaction);
+        props.save(transaction)
+
     }
 
     if(props.isOpen){
@@ -17,9 +33,9 @@ export default function EditTransactionModal(props) {
                 appElement={document.getElementById("root")}
             >
                 <h3>Hello, testing!</h3>
+                <button onClick={props.close}>X</button>
                 <h1>{props.transaction.id}</h1>
-                <button onClick={editTransaction}>Save</button>
-
+                <TransactionForm save={handleSubmit}/>
             </Modal>
         );
     } else {
@@ -33,3 +49,5 @@ export default function EditTransactionModal(props) {
         )
     }
 }
+
+export default EditTransactionModal;
