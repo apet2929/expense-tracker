@@ -4,11 +4,6 @@ import Modal from "react-modal"
 import TransactionForm from "./TransactionForm";
 
 function EditTransactionModal(props) {
-    let editTransaction = () => {
-        let temp = props.transaction.copy();
-        temp.amount = 1000;
-        props.save(temp);
-    }
 
     let handleSubmit = (date, amount, category, description) => {
         console.log("Handling submit!");
@@ -21,10 +16,10 @@ function EditTransactionModal(props) {
         }
         console.log("Submitted Transaction, saving now.",transaction);
         props.save(transaction)
-
     }
 
     if(props.isOpen){
+        let headerText = props.transaction ? "Edit Transaction" : "Create New Transaction";
         return (
             <Modal
                 isOpen={props.isOpen}
@@ -32,10 +27,9 @@ function EditTransactionModal(props) {
                 shouldCloseOnOverlayClick={true}
                 appElement={document.getElementById("root")}
             >
-                <h3>Hello, testing!</h3>
+                <h3> {headerText} </h3>
                 <button onClick={props.close}>X</button>
-                <h1>{props.transaction.id}</h1>
-                <TransactionForm save={handleSubmit}/>
+                <TransactionForm initial_value={props.transaction} save={handleSubmit}/>
             </Modal>
         );
     } else {

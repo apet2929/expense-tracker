@@ -4,11 +4,12 @@ import UserHeader from './components/UserHeader';
 import { SignInButton, SignOutButton } from './Auth';
 import React from 'react';
 import { loadUserTransactions, sumTransactionsAmount } from './functions/transactions';
-import { loadUserData } from './Firestore';
+import { loadUserData, saveUser } from './Firestore';
 import Footer from './components/Footer';
 import TransactionTableView from './components/TransactionTableView';
 import TransactionChartView from './components/TransactionChartView';
 import EditTransactionModal from './components/modal/EditTransactionModal';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -19,17 +20,20 @@ class App extends React.Component {
       transactionsLoading: true,
       transaction_history: [],
       editing: false,
-      editing_id: null
+      editing_id: null,
+      onHistoryChanged: () => {}
     };
   }
 
   componentDidMount(){
     this.deleteTransaction = this.deleteTransaction.bind(this);
     this.endEditing = this.endEditing.bind(this);
+    this.startCreateTransaction = this.startCreateTransaction.bind(this);
     this.createTransaction = this.createTransaction.bind(this);
     this.setTransaction = this.setTransaction.bind(this);
     this.requestEdit = this.requestEdit.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
+    this.save = this.save.bind(this);
 
     getAuth().onAuthStateChanged((user) => {
       console.log("Auth state changed!");
@@ -43,6 +47,15 @@ class App extends React.Component {
         this.signOut();
       }             
     });
+
+    this.setState({
+      onHistoryChanged: this.save
+    })
+  }
+
+  save() {
+    console.log("Saving!");
+    saveUser(this.state);
   }
 
   signIn(user){
@@ -76,17 +89,26 @@ class App extends React.Component {
     });
   }
 
-  deleteTransaction(transaction_id){
-    console.log(transaction_id);
-    console.log(this.getTransaction(transaction_id));
+  startCreateTransaction(){
+    this.setState({
+      editing: true,
+      editing_id: null
+    });
   }
+
+  deleteTransaction(id) {
+    const remainingTransactions = this.state.transaction_history.filter(t => t.id !== id)
+    this.setState({
+        transaction_history: remainingTransactions
+    }, () => {this.state.onHistoryChanged()});
+}
 
   createTransaction(transaction){
     let newHistory = this.state.transaction_history;
     newHistory.push(transaction);
     this.setState({
       transaction_history: newHistory
-    });
+    },  () => {this.state.onHistoryChanged()});
   }
 
   setTransaction(transaction_id, new_transaction){
@@ -100,7 +122,7 @@ class App extends React.Component {
     newHistory[index] = new_transaction
     this.setState({
       transaction_history: newHistory
-    });
+    },  () => {this.state.onHistoryChanged()});
   }
 
   requestEdit(transaction_id){
@@ -143,7 +165,7 @@ class App extends React.Component {
               <h1 className="totalMoney">Total Money: {totalMoney}</h1>
               <hr className="totalUnderline"></hr>
               <section id="buttons">
-                <button>New Transaction</button>
+                <button onClick={this.startCreateTransaction}>New Transaction</button>
                 <SignOutButton />
                 <button>View Data</button>
               </section>

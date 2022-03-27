@@ -60,19 +60,13 @@ export function addUser(userData) {
 
 export function saveUser(userData) {
   const db = getFirestore(app);
-  setDoc(doc(db, "users", userData.user_id), {
-    user_id: userData.user_id,
-    email: userData.email,
-    transaction_history: JSON.stringify(userData.transaction_history)
+  let data = JSON.stringify(userData.transaction_history);
+  console.log(userData);
+  setDoc(doc(db, "users", userData.user.uid), {
+    user_id: userData.user.uid,
+    email: userData.user.email,
+    transaction_history: data
   }); 
-
-  let elem = document.getElementById("saveStatus");
-  elem.innerText = "Saved!";
-  elem.hidden = false;
-  setTimeout(() => {
-    elem.hidden = true;
-    
-  }, 5000);
 }
 
 export async function loadUserData(user_id){

@@ -1,19 +1,34 @@
 import React from "react"
 import TransactionCategoryPicker from "./TransactionCategoryPicker";
 import DatePicker from "react-datepicker"
-import { Transaction, TransactionCategory } from "../../functions/transactions";
+import "react-datepicker/dist/react-datepicker.css";
+import { TransactionCategory } from "../../functions/transactions";
 
 class TransactionForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            date: new Date(),
-            amount: 0,
-            category: "",
-            description: "",
-            validDate: true,
-            validAmount: false,
-            validCategory: true,
+
+        if(props.initial_value){
+            let t = props.initial_value;
+            this.state = {
+                date: t.date,
+                amount: t.amount,
+                category: t.category,
+                description: t.description,
+                validDate: true,
+                validAmount: true,
+                validCategory: true
+            }
+        } else {
+            this.state = {
+                date: new Date(),
+                amount: 0,
+                category: "",
+                description: "",
+                validDate: true,
+                validAmount: false,
+                validCategory: true,
+            }
         }
 
         this.handleChange = this.handleChange.bind(this);
