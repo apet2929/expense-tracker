@@ -10,7 +10,7 @@ export default function UserHeader(props) {
                     <tbody>
                         <tr>
                             <td>
-                                <img className="logoImg" src="assets/logo.png" alt="logo" />
+                                <img className="logoImg" src="/assets/btc-logo.png" alt="logo" />
                             </td>
                             <td>
                                 <h1 className="title">Expense Tracker</h1>

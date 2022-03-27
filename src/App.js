@@ -151,6 +151,8 @@ class App extends React.Component {
 
   render(){
     console.log("Top level rendering!");
+    let transactions = this.state.transaction_history;
+    transactions.sort(((a,b) => b.date - a.date))
     if(this.state.userAuthenticating){
       return null;
     } else {
