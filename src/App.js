@@ -10,7 +10,6 @@ import TransactionTableView from './components/TransactionTableView';
 import TransactionChartView from './components/TransactionChartView';
 import EditTransactionModal from './components/modal/EditTransactionModal';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -72,6 +71,7 @@ class App extends React.Component {
         transaction_history: transactions
       });
     }, (err) => {
+      // New user
       this.setState({
         transactionsLoading: false,
         transaction_history: []

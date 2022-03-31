@@ -57,7 +57,7 @@ export default function TransactionTableView(props){
                                     setSortBy("date");
                                     setSortAscending(!sortAscending);
                                     }}>
-                                    <img src="src\assets\btc-logo.png" className="tableSortImage" alt="Sort By Date Ascending/Descending" />
+                                    <img src="../src/assets/btc-logo.png" className="tableSortImage" alt="Sort By Date Ascending/Descending" />
                                 </button>
                             </th>
                             <th>Amount</th>

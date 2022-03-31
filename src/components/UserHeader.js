@@ -1,5 +1,7 @@
 import React from "react";
 import {SignInButton} from "../Auth"
+import logo from "../assets/btc-logo.png";
+import "../App.css"
 
 export default function UserHeader(props) {
     let {username, pfp_url} = props;
@@ -10,13 +12,12 @@ export default function UserHeader(props) {
                     <tbody>
                         <tr>
                             <td>
-                                <img className="logoImg" src="/assets/btc-logo.png" alt="logo" />
+                                <img className="logoImg" src={logo} alt="logo" />
                             </td>
                             <td>
                                 <h1 className="title">Expense Tracker</h1>
                             </td>
                             <td>
-                                <img className="profilePic" src={pfp_url ? pfp_url : "../assets/btc-logo.png"} alt="pfp" />
                                 <p>{username}</p>
                             </td>
                         </tr>

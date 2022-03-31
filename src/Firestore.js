@@ -87,7 +87,7 @@ export async function loadUserData(user_id){
 async function doesUserExist(user_id) {
   let users = await getUsers();
   for(const user of users){
-    const equals = (user.user_id == user_id);
+    const equals = (user.user_id === user_id);
     if(equals) return true;
   }
   return false;
