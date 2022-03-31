@@ -1,4 +1,5 @@
 import { useState } from "react"
+import SortButton from "./SortButton";
 
 export default function TransactionTableView(props){
     let toTableComponent = (transaction) => {
@@ -26,25 +27,39 @@ export default function TransactionTableView(props){
         ],
         "date": [
             (a, b) => {
-                return b.date - a.date
+                return a.date - b.date
             }, 
             (a, b) => {
-                return a.date - b.date
+                return b.date - a.date
+            }
+        ],
+        "amount": [
+            (a, b) => {
+                return a.amount - b.amount
+            }, 
+            (a, b) => {
+                return b.amount - a.amount
+            }
+        ],
+        "category": [
+            (a, b) => {
+                return a.category.name.localeCompare(b.category.name);
+            }, 
+            (a, b) => {
+                return b.category.name.localeCompare(a.category.name);
             }
         ]
     };
 
-    
-
     let [sortBy, setSortBy] = useState("none");
     let [sortAscending, setSortAscending] = useState(true);
-    let sortType =  sortFunctions[sortBy];
+    let sortType = sortFunctions[sortBy];
     let sortFunction = sortType[sortAscending ? 0 : 1];
     let sorted_transactions = props.transactions.sort(sortFunction);
     console.log("Sorting transactions!", sortFunction);
     console.log(sortFunctions[sortBy], sortAscending ? 0 : 1);
     let transactions_html = sorted_transactions.map(toTableComponent);
-
+    let ascendingState = sortAscending ? 1 : 2;
     return (
         <div className="transactionsBox">
             <div className="transactions">
@@ -53,16 +68,32 @@ export default function TransactionTableView(props){
                         <tr>
                             <th>
                                 <p> Date </p>
-                                <button className="tableSortButton" onClick={() => {
-                                    setSortBy("date");
-                                    setSortAscending(!sortAscending);
-                                    }}>
-                                    <img src="../src/assets/btc-logo.png" className="tableSortImage" alt="Sort By Date Ascending/Descending" />
-                                </button>
+                                <SortButton direction={sortBy==="date" ? ascendingState : 0} onClick={
+                                    () => {
+                                        setSortBy("date")
+                                        setSortAscending(!sortAscending)
+                                    }
+                                }/>
                             </th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Description</th>
+                            <th>
+                                <p> Amount </p>
+                                <SortButton direction={sortBy==="amount" ? ascendingState : 0} onClick={
+                                    () => {
+                                        setSortBy("amount")
+                                        setSortAscending(!sortAscending)
+                                    }
+                                }/>
+                            </th>
+                            <th>
+                                <p> Category </p>
+                                <SortButton direction={sortBy==="category" ? ascendingState : 0} onClick={
+                                    () => {
+                                        setSortBy("category")
+                                        setSortAscending(!sortAscending)
+                                    }
+                                }/>
+                            </th>
+                            <th> Description </th>
                             <th id="transaction_actions">Actions</th>
                         </tr>
                     </thead>

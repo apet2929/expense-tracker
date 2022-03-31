@@ -70,10 +70,10 @@ export function saveUser(userData) {
 }
 
 export async function loadUserData(user_id){
+  const db = getFirestore(app);
+  const docRef = doc(db, "users", user_id);
+  const docSnapshot = await getDoc(docRef);
   return new Promise((resolve, reject) => {
-    const db = getFirestore(app);
-    const docRef = doc(db, "users", user_id);
-    const docSnapshot = getDoc(docRef);
     if(docSnapshot.exists()) {
       let data = docSnapshot.data();
       resolve(data);
