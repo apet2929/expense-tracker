@@ -70,16 +70,18 @@ export function saveUser(userData) {
 }
 
 export async function loadUserData(user_id){
-  const db = getFirestore(app);
-  const docRef = doc(db, "users", user_id);
-  const docSnapshot = await getDoc(docRef);
-  
-  if(docSnapshot.exists()) {
-    let data = docSnapshot.data();
-    return data;
-  } else {
-    console.error(`User with id ${user_id} does not exist in the database!`);
-  }
+  return new Promise((resolve, reject) => {
+    const db = getFirestore(app);
+    const docRef = doc(db, "users", user_id);
+    const docSnapshot = getDoc(docRef);
+    if(docSnapshot.exists()) {
+      let data = docSnapshot.data();
+      resolve(data);
+    } else {
+      console.error(`User with id ${user_id} does not exist in the database!`);
+      reject(`User with id ${user_id} does not exist in the database!`)
+    }
+  })
 }
 
 async function doesUserExist(user_id) {

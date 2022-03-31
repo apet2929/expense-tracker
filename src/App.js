@@ -71,6 +71,12 @@ class App extends React.Component {
         transactionsLoading: false,
         transaction_history: transactions
       });
+    }, (err) => {
+      this.setState({
+        transactionsLoading: false,
+        transaction_history: []
+      });
+      this.save();
     })
   }
 
