@@ -16,7 +16,7 @@ const colors = [
 
 function TransactionPieChart(props) {
     
-    function getChartData(){
+    function getData(){
         
         let data = {}
         TransactionCategory.getCategories().forEach((category) => {
@@ -58,7 +58,7 @@ function TransactionPieChart(props) {
         <div id="transaction-pie-chart">
             <Pie 
                 className="chart-body"
-                data={getChartData()}
+                data={getData()}
                 options={options}
                 />
         </div>

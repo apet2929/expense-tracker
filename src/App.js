@@ -7,7 +7,7 @@ import { loadUserTransactions, sumTransactionsAmount } from './functions/transac
 import { loadUserData, saveUser } from './Firestore';
 import Footer from './components/Footer';
 import TransactionTableView from './components/TransactionTableView';
-import TransactionChartView from './components/TransactionChartView';
+import TransactionChartView from './components/charts/TransactionChartView';
 import EditTransactionModal from './components/modal/EditTransactionModal';
 
 class App extends React.Component {

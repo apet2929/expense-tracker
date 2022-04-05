@@ -1,5 +1,6 @@
 import { useState } from "react"
-import TransactionPieChart from "./charts/TransactionPieChart";
+import TransactionLineChart from "./TransactionLineChart";
+import TransactionPieChart from "./TransactionPieChart";
 
 export default function TransactionChartView(props){
 
@@ -13,8 +14,8 @@ export default function TransactionChartView(props){
     function renderLineChart(transactions){
         return (
             <div className="chart line">
-                <h3>Line Chart!</h3>
-                
+                <TransactionLineChart transactions={transactions} />
+            
             </div>
         )
     }

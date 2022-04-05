@@ -1,7 +1,5 @@
 import React from "react";
-import { Chart } from "chart.js/auto"
 import { Line } from 'react-chartjs-2'
-
 
 class TransactionLineChart extends React.Component {
     
@@ -12,14 +10,7 @@ class TransactionLineChart extends React.Component {
                 {
                     label: "Total Cash",
                 data: [],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
+                
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
@@ -48,39 +39,35 @@ class TransactionLineChart extends React.Component {
 
     getTimeStep() {
         let len = this.props.transactions.length;
-        if(len != 0){
+        if(len !== 0){
             let timeRange = this.props.transactions[len-1].date - this.props.transactions[0].date;
             let timeStep = timeRange / len * 1.5;
             console.log(timeStep)
-            // let timeRange = this.props.transactions[this.props.transactions.length - 1].date - this.props.transactions[0].date
-            // let timeStep = timeRange / this.props.transactions.length * 1.5;
             return timeStep;
         }
         return 1;
     }
 
     render() {
-        // this.updateData();
-        console.log("Line Chart renderring");
         let timeStep = this.getTimeStep()
-
-        return (
-            <div class="chart-container" id="transaction-line-chart">
-                <Line 
-                className="chart-body"
-                options={
-                    {
-                    scales: {
-                        y: {
-                          beginAtZero: true
-                        },
-                        x: {
-                            ticks: {
-                                stepSize: timeStep
-                            }
+        let options = {
+                scales: {
+                    y: {
+                      beginAtZero: true
+                    },
+                    x: {
+                        ticks: {
+                            stepSize: timeStep
                         }
                     }
-                }}
+                }
+        }
+        
+        return (
+            <div className="chart-container" id="transaction-line-chart">
+                <Line 
+                className="chart-body"
+                options={options}
                 data={this.getData()}    
                 />
             </div>
