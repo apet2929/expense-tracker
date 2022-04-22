@@ -14,7 +14,9 @@ export default function TransactionChartView(props){
     function renderLineChart(transactions){
         return (
             <div className="chart line">
-                <TransactionLineChart transactions={transactions} />
+                <TransactionLineChart transactions={transactions} options={{
+                    dateMin: new Date(2021, 1, 1)
+                }}/>
             
             </div>
         )

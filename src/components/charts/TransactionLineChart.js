@@ -1,5 +1,8 @@
 import React from "react";
 import { Line } from 'react-chartjs-2'
+import { enUS } from "date-fns/locale"
+import differenceInDays from "date-fns/differenceInDays"
+import "chartjs-adapter-date-fns"
 
 class TransactionLineChart extends React.Component {
     
@@ -28,10 +31,13 @@ class TransactionLineChart extends React.Component {
         let data = this.getDefaultData();
         var runningAmount = 0;
         this.props.transactions.forEach(transaction => {
-            let x = transaction.getDate();
-            runningAmount += transaction.amount;
-            let y = runningAmount;
-            data.datasets[0].data.push({x: x, y: y});
+            if(this.props.options.dateMin && transaction.date > this.props.options.dateMin){
+                let x = transaction.getDate();
+
+                runningAmount += transaction.amount;
+                let y = runningAmount;
+                data.datasets[0].data.push({x: x, y: y});
+            }
         });
         return data;
     
@@ -40,26 +46,44 @@ class TransactionLineChart extends React.Component {
     getTimeStep() {
         let len = this.props.transactions.length;
         if(len !== 0){
-            let timeRange = this.props.transactions[len-1].date - this.props.transactions[0].date;
+            
+            let timeRange = differenceInDays(this.props.transactions[0].date, this.props.transactions[len - 1].date)
             let timeStep = timeRange / len * 1.5;
-            console.log(timeStep)
-            return timeStep;
+            console.log(timeRange)
+            return 5;
         }
         return 1;
     }
 
     render() {
+        let data = this.getData();
+        console.log(data);
+        let timeFormat = "YYYY-MM-DD"
         let timeStep = this.getTimeStep()
         let options = {
                 scales: {
-                    y: {
-                      beginAtZero: true
-                    },
                     x: {
-                        ticks: {
-                            stepSize: timeStep
+                        type: "time",
+                        time: {
+                            format: timeFormat,
+                        },
+                        scaleLabel: {
+                            display:     true,
+                            labelString: 'Date'
+                        },
+                        adapters: {
+                            date: {
+                                locale: enUS
+                            }
                         }
-                    }
+                    },
+                    y: {
+                        scaleLabel: {
+                            display:     true,
+                            labelString: 'value'
+                        }
+                    },
+                    
                 }
         }
         
@@ -68,7 +92,7 @@ class TransactionLineChart extends React.Component {
                 <Line 
                 className="chart-body"
                 options={options}
-                data={this.getData()}    
+                data={data}    
                 />
             </div>
         )
