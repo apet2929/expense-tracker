@@ -30,7 +30,7 @@ class TransactionLineChart extends React.Component {
     getData() {
         let data = this.getDefaultData();
         var runningAmount = 0;
-        this.props.transactions.forEach(transaction => {
+        this.props.transactions.sort((a,b) => {return a.date - b.date}).forEach(transaction => {
             if(this.props.options.dateMin && transaction.date > this.props.options.dateMin){
                 let x = transaction.getDate();
 

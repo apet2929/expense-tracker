@@ -27,9 +27,13 @@ function EditTransactionModal(props) {
                 shouldCloseOnOverlayClick={true}
                 appElement={document.getElementById("root")}
             >
-                <h3> {headerText} </h3>
-                <button onClick={props.close}>X</button>
-                <TransactionForm initial_value={props.transaction} save={handleSubmit}/>
+                <div className="modalContainer">
+                    <div className="wrapper">
+                        <h3 id="modalTitle">{headerText}</h3>
+                        <button id="exitButton" onClick={props.close}>X</button>
+                        <TransactionForm initial_value={props.transaction} save={handleSubmit}/>
+                    </div>
+                </div>
             </Modal>
         );
     } else {

@@ -35,37 +35,78 @@ class TransactionForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    render() {
-        return (
-            <form id="transaction-form" onSubmit={this.handleSubmit}>
-                <label htmlFor="date">Date:</label>
-                <DatePicker 
-                    selected={this.state.date}
-                    onChange={(date) => this.validateDate(date)}
-                    className="form-control input-sm"
-                    wrapperClassName="datepicker-wrapper"
-                />
-                <label htmlFor="amount">Amount ($):</label>
-                <input 
-                    type="text"
-                    name="amount"
-                    onChange={(e) => this.handleChange(e)}
-                    value={this.state.amount}
-                />
-                <TransactionCategoryPicker handleChange={this.handleChange}/>
-                <label htmlFor="description">Description (optional):</label>
-                <input 
-                    type="text"
-                    name="descripton"
-                    placeholder=""
-                    onChange={(e) => this.handleChange(e)}
-                    value={this.state.description}
-                />
-                <button type="submit">Submit</button>
+    // render() {
+    //     return (
+    //         <form id="transaction-form" onSubmit={this.handleSubmit}>
+    //             <label htmlFor="date">Date:</label>
+    //             <DatePicker 
+    //                 selected={this.state.date}
+    //                 onChange={(date) => this.validateDate(date)}
+    //                 className="form-control input-sm"
+    //                 wrapperClassName="datepicker-wrapper"
+    //             />
+    //             <label htmlFor="amount">Amount ($):</label>
+    //             <input 
+    //                 type="text"
+    //                 name="amount"
+    //                 onChange={(e) => this.handleChange(e)}
+    //                 value={this.state.amount}
+    //             />
+    //             <TransactionCategoryPicker handleChange={this.handleChange}/>
+    //             <label htmlFor="description">Description (optional):</label>
+    //             <input 
+    //                 type="text"
+    //                 name="descripton"
+    //                 placeholder=""
+    //                 onChange={(e) => this.handleChange(e)}
+    //                 value={this.state.description}
+    //             />
+    //             <button type="submit">Submit</button>
+    //         </form>
+    //     )
+    // }
+
+    render(){
+        return(
+            <form id="modalForm" onSubmit={this.handleSubmit}>
+                <div className="questionContainer">
+                    <div className="question">
+                        <label htmlFor="date">Date:</label>
+                        <DatePicker 
+                            selected={this.state.date}
+                            onChange={(date) => this.validateDate(date)}
+                            className="form-control input-sm"
+                            wrapperClassName="datepicker-wrapper"
+                        />
+                        
+                    </div>
+                    <div className="question">
+                        <label htmlFor="amount">Amount ($):</label>
+                        <input 
+                            type="text"
+                            name="amount"
+                            onChange={(e) => this.handleChange(e)}
+                            value={this.state.amount}
+                        />
+                    </div>
+                    <div className="question">
+                        <TransactionCategoryPicker handleChange={this.handleChange}/>
+                    </div>
+                    <div className="question">
+                        <label htmlFor="description">Description (optional):</label>
+                        <input 
+                            type="text"
+                            name="descripton"
+                            placeholder=""
+                            onChange={(e) => this.handleChange(e)}
+                            value={this.state.description}
+                        />
+                    </div>
+                </div>
+                <button id="submitButton" type="submit">Submit</button>
             </form>
         )
     }
-
     reset(){
         this.setState({
             date: new Date(),
