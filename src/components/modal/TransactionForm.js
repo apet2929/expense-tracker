@@ -83,7 +83,7 @@ class TransactionForm extends React.Component {
                     <div className="question">
                         <label htmlFor="amount">Amount ($):</label>
                         <input 
-                            type="text"
+                            type="number"
                             name="amount"
                             onChange={(e) => this.handleChange(e)}
                             value={this.state.amount}
@@ -153,23 +153,10 @@ class TransactionForm extends React.Component {
     }
 
     validateAmount(value) {
-        let amt = Number.parseFloat(value);
-        if(value === "" || value === "-"){
-            this.setState({
-                validAmount: false,
-                amount: value
-            });
-        }
-        else if(isNaN(amt)) {
-            this.setState({
-                validAmount: false,
-            });
-        } else {
-            this.setState({
-                validAmount: true,
-                amount: amt
-            });
-        }
+        this.setState({
+            amount: value,
+            validAmount: true
+        });
     }
 
     validateCategory(value) {
@@ -191,7 +178,7 @@ class TransactionForm extends React.Component {
         if(shouldSubmit){
             console.log("Adding transaction!");
             console.dir(this.state);
-            this.props.save(this.state.date, this.state.amount, this.state.category, this.state.description);
+            this.props.save(this.state.date, parseFloat(this.state.amount), this.state.category, this.state.description);
             this.reset();
         } else {
             alert("Some required value(s) were not filled out!");

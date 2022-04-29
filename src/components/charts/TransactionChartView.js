@@ -48,7 +48,7 @@ export default function TransactionChartView(props){
     function renderButtons(){
         return (
             <div className="buttonContainer">
-                <button onClick={() => setChartType(!chartType)}>Change</button>
+                <button className="styledButton2" onClick={() => setChartType(!chartType)}>Change</button>
             </div>
         )
     }

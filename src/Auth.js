@@ -40,12 +40,12 @@ export function googleSignout() {
 
 export function SignInButton() {
     return (
-        <button className="login signin" onClick={googleSignin}>Sign In</button>
+        <button className="login signin styledButton2" onClick={googleSignin}>Sign In</button>
     )
 }
 
 export function SignOutButton() {
     return (
-        <button className="login signout" onClick={ googleSignout }>Sign Out</button>
+        <button className="login signout styledButton2" onClick={ googleSignout }>Sign Out</button>
     )
 }

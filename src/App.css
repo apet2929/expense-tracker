@@ -20,6 +20,23 @@ header {
   color: var(--col5);
 }
 
+.styledButton {
+  width: 10vw;
+  border-width: 3px;
+  background-color: var(--col3);
+  border-color: var(--col3);
+  border-radius: .8vw;
+  color: var(--col5);
+  height: 3vw;
+}
+
+.styledButton2 {
+  border-color: var(--col3);
+  border-radius: .3vw;
+  width: 8vw;
+  height: 2vw;
+}
+
 .title {
   font-size: 3.5vw;
   width: 100%;
@@ -57,9 +74,14 @@ header {
 
 .headerTbl td p {
   font-size: 1.8vw;
-  float: right;
-  margin-bottom: 10%;
-  margin-right: 15%;
+}
+
+#userHeaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
 }
 
 .main {
@@ -92,16 +114,6 @@ header {
   width: 50vw;
   margin: auto;
   margin-top: 10px;
-}
-
-#buttons button {
-  width: 10vw;
-  border-width: 3px;
-  background-color: var(--col3);
-  border-color: var(--col3);
-  border-radius: .8vw;
-  color: var(--col5);
-  height: 3vw;
 }
 
 
@@ -180,14 +192,6 @@ header {
   margin-right: auto;
   text-align: center;
   /* padding: 2vw; */
-}
-
-.buttonContainer button {
-  border-color: var(--col3);
-  border-radius: .3vw;
-  width: 8vw;
-  height: 2vw;
-
 }
 
 .transactionTable {

@@ -1,5 +1,5 @@
 import React from "react";
-import {SignInButton} from "../Auth"
+import {SignInButton, SignOutButton} from "../Auth"
 import logo from "../assets/btc-logo.png";
 import "../App.css"
 
@@ -18,7 +18,11 @@ export default function UserHeader(props) {
                                 <h1 className="title">Expense Tracker</h1>
                             </td>
                             <td>
-                                <p>{username}</p>
+                                <div id="userHeaderContainer">
+                                    <p>{username}</p>
+                                    <SignOutButton />
+                                </div>
+                                
                             </td>
                         </tr>
                     </tbody>

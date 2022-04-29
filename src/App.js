@@ -173,9 +173,7 @@ class App extends React.Component {
               <h1 className="totalMoney">Total Money: {totalMoney}</h1>
               <hr className="totalUnderline"></hr>
               <section id="buttons">
-                <button onClick={this.startCreateTransaction}>New Transaction</button>
-                <SignOutButton />
-                <button>View Data</button>
+                <button className="styledButton" onClick={this.startCreateTransaction}>New Transaction</button>
               </section>
 
               <section id="middle">
